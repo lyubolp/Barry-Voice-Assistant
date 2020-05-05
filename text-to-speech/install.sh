@@ -1,16 +1,6 @@
 echo "Run this script with sudo if needed";
 
-
-chmod u+x requirements.sh
 chmod u+x build.sh
-
-echo "Getting the required tools"
-./requirements.sh
-
-if [ $? -ne 0]; then
-    echo "Failed at requirements.sh ...";
-    exit 1;
-fi
 
 echo "Building..."
 ./build.sh
