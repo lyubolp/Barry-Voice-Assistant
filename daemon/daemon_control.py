@@ -1,14 +1,14 @@
 #!/bin/python3
 
 import sys
-
-from barry_client import BarryClient
-from barry_daemon import BarryGenericDaemon
+import os
+import barry_client
+import barry_daemon
 
 name = "barry"
 
-daemon = BarryGenericDaemon(name)
-client = BarryClient(name)
+daemon = barry_daemon.BarryDaemon(name)
+client = barry_client.BarryClient(name)
 
 # /var/run/ PID file
 # /run/ SOCKET file
@@ -34,6 +34,23 @@ if len(sys.argv) >= 2:
             print(response)
         except IOError as err:
             print(err)
+    elif 'config' == sys.argv[1]:
+        if 'set' == sys.argv[2]:
+            response = client.message('config:set:' + sys.argv[3]
+                                      + ':' + sys.argv[4])
+            print(response)
+        elif 'get' == sys.argv[2]:
+            response = client.message('config:get:' + sys.argv[3])
+            print(response)
+    elif 'add' == sys.argv[1]:
+        file = os.path.abspath(sys.argv[3])
+        phrase = sys.argv[2]
+        response = client.message('add:' + phrase + ':' + str(file))
+        print(response)
+    elif 'exec' == sys.argv[1]:
+        response = client.message('exec:' + sys.argv[2])
+        print(response)
+
     else:
         print("Unknown command")
         sys.exit(1)

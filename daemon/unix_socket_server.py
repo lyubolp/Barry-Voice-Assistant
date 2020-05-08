@@ -1,14 +1,16 @@
 import os
 import socket
 
-from logger import Logger
+import logger
+import barry_daemon
 
 
 class UnixSocketServer:
-    def __init__(self, name: str):
+    def __init__(self, name: str, daemon: barry_daemon.BarryDaemon):
         self.name = name
         self.socketPath = '/run/' + self.name + '.sock'
-        self.logger = Logger(self.name + '-USocket')
+        self.logger = logger.Logger(self.name + '-USocket')
+        self.daemon = daemon
 
     def startListening(self):
         """
@@ -36,19 +38,16 @@ class UnixSocketServer:
         self.sock.listen(1)
 
     def __loop(self):
-        self.logger.info("Entering listening mode, waitin for connections")
+        self.logger.info("Entering listening mode, waiting for connections")
         while True:
             self.logger.info("Unix Socket waiting for a connection")
             self.connection, self.client_address = self.sock.accept()
             self.logger.info("Unix Socket established connection")
             try:
                 message = self.__readMessage()
-
-                # TODO use message
-                message = message.lower()
-                # TODO use message
-
-                self.__writeMessage("Acknowledged")
+                # message = message.lower()
+                response = self.daemon.parseMessage(message)
+                self.__writeMessage(response)
             finally:
                 self.logger.info("Unix Socket closing connection")
                 self.connection.close()

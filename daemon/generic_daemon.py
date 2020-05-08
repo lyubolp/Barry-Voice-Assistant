@@ -16,12 +16,12 @@ class GenericDaemon:
         self.pidFilePath = '/var/run/' + self.name + '.pid'
         self.logger = Logger(self.name + '-Daemon')
 
-    def _run(self):
+    def _run(self) -> None:
         """
         Override this method with daemon logic
         """
 
-    def start(self):
+    def start(self) -> None:
         """
         Start the daemon
         """
@@ -40,7 +40,7 @@ class GenericDaemon:
         self.__daemonize()
         self._run()
 
-    def stop(self):
+    def stop(self) -> None:
         """
         Stop the daemon
         """
@@ -56,7 +56,7 @@ class GenericDaemon:
 
         self.__killOldDaemon()
 
-    def restart(self):
+    def restart(self) -> None:
         self.logger.info("Restarting daemon")
 
         if not self.__checkPermissions():
