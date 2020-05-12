@@ -17,13 +17,11 @@ class BarryClient:
             self.sock.connect(self.socket_path)
         except socket.error:
             self.logger.error("Cannot connect to socket " + self.socket_path)
-            raise IOError("Cannot connect to socket " + self.socket_path
-                          + ". Is the daemon running?")
+            raise IOError("Cannot connect to socket " + self.socket_path + ". Is the daemon running?")
 
         response = ""
         try:
-            self.logger.info("Sending message to daemon over unix socket: "
-                             + message)
+            self.logger.info("Sending message to daemon over unix socket: " + message)
             self.sock.sendall(message.encode('utf-8'))
 
             response = b''
@@ -35,8 +33,7 @@ class BarryClient:
                     break
 
             response = response.decode('utf-8')
-            self.logger.info("Received response from daemon over unix socket: "
-                             + response)
+            self.logger.info("Received response from daemon over unix socket: " + response)
             self.sock.close()
             return response
         except OSError:

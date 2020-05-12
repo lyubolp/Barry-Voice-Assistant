@@ -137,8 +137,7 @@ class GenericDaemon:
         This way the process (grandchild of the original process)
         cannot attach itself to a tty
         """
-        self.logger.info("Preventing process from attaching to tty"
-                         + "by creating a fork")
+        self.logger.info("Preventing process from attaching to tty by creating a fork")
 
         self.__forkProcess()
 
@@ -178,8 +177,7 @@ class GenericDaemon:
             with open(self.pidFilePath, 'w+') as pidFile:
                 pidFile.write(pid + '\n')
         except OSError:
-            self.logger.error("Cannot write to " + self.pidFilePath
-                              + ". Permission denied")
+            self.logger.error("Cannot write to " + self.pidFilePath + ". Permission denied")
             exit(1)
 
     def __registerSignalsHandlers(self):

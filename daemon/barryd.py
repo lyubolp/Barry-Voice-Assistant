@@ -36,8 +36,7 @@ if len(sys.argv) >= 2:
             print(err)
     elif 'config' == sys.argv[1]:
         if 'set' == sys.argv[2]:
-            response = client.message('config:set:' + sys.argv[3]
-                                      + ':' + sys.argv[4])
+            response = client.message('config:set:' + sys.argv[3] + ':' + sys.argv[4])
             print(response)
         elif 'get' == sys.argv[2]:
             response = client.message('config:get:' + sys.argv[3])
@@ -45,10 +44,14 @@ if len(sys.argv) >= 2:
     elif 'add' == sys.argv[1]:
         file = os.path.abspath(sys.argv[3])
         phrase = sys.argv[2]
-        response = client.message('add:' + phrase + ':' + str(file))
+        arguments = ':'.join([x.strip(':') for x in sys.argv[4:]])
+        response = client.message('add:' + phrase + ':' + str(file) + ':' + str(arguments))
         print(response)
     elif 'exec' == sys.argv[1]:
-        response = client.message('exec:' + sys.argv[2])
+        response = client.message('exec:' + ':'.join(sys.argv[2:]))
+        print(response)
+    elif 'list' == sys.argv[1]:
+        response = client.message('list')
         print(response)
 
     else:
