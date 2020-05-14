@@ -1,3 +1,5 @@
 __pycache__/
 /.idea/
 .env/
+text-to-speech/mimic1/*
+*/api_key
