@@ -1,3 +1,5 @@
+from typing import Optional
+
 import speech_recognition as sr
 
 from datetime import datetime
@@ -6,14 +8,14 @@ AUDIO_SAVE_DIR = "speech-to-text/audio"
 GOOGLE_CREDENTIALS_PATH = "speech-to-text/google_credentials.json"
 
 
-def get_google_credentials():
+def get_google_credentials() -> str:
     with open(GOOGLE_CREDENTIALS_PATH) as f:
         credentials = f.read()
 
     return credentials
 
 
-def get_audio(timeout=5, phrase_time_limit=5):
+def get_audio(timeout: int = 5, phrase_time_limit: int = 5, save: bool = True) -> Optional[sr.AudioData]:
     """
     Records audio and returns it as an instance of type AudioData.
     Saves the recorded audio locally in directory AUDIO_SAVE_DIR.
@@ -21,6 +23,7 @@ def get_audio(timeout=5, phrase_time_limit=5):
     :param int timeout: The maximum number of seconds that this will wait for a phrase to start before giving up.
     :param int phrase_time_limit: The maximum number of seconds that this will allow a phrase to continue before
     stopping and returning the part of the phrase processed before the time limit was reached.
+    :param bool save: Whether to save the recorded audio locally.
 
     :return: The audio data or None if there was a problem while listening.
 
@@ -37,14 +40,15 @@ def get_audio(timeout=5, phrase_time_limit=5):
 
     file_name = datetime.now().strftime('%Y-%m-%d-%H:%M:%S') + ".wav"
 
-    # Write the recorded audio to a file
-    with open(AUDIO_SAVE_DIR + "/" + file_name, "wb") as f:
-        f.write(audio.get_wav_data())
+    if save:
+        # Write the recorded audio to a file
+        with open(AUDIO_SAVE_DIR + "/" + file_name, "wb") as f:
+            f.write(audio.get_wav_data())
 
     return audio
 
 
-def recognize(audio):
+def recognize(audio: sr.AudioData) -> Optional[str]:
     r = sr.Recognizer()
 
     credentials = get_google_credentials()
