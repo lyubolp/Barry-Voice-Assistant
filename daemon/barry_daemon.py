@@ -30,6 +30,11 @@ class BarryDaemon(generic_daemon.GenericDaemon):
                 if messageParts[2] in self.config.keys():
                     return self.config[messageParts[2]]
                 return ''
+            if messageParts[0] == 'config' and messageParts[1] == 'unset':
+                if messageParts[2] in self.config.keys():
+                    del self.config[messageParts[2]]
+                    self.__saveConfig()
+                return 'ACK'
 
         if messageParts[0] == 'add':
             self.__addScript(messageParts)
@@ -42,10 +47,15 @@ class BarryDaemon(generic_daemon.GenericDaemon):
         if messageParts[0] == 'exec':
             response = self.__execute(messageParts)
             return response
-        else:
-            return 'ERR'
 
-        return 'ACK'
+        if messageParts[0] == 'remove':
+            if 'scripts' in self.config.keys():
+                if messageParts[1] in self.config['scripts']:
+                    del self.config['scripts'][messageParts[1]]
+                    self.__saveConfig()
+            return 'ACK'
+
+        return 'ERR'
 
     def __execute(self, message: []) -> str:
         message = message[1:]

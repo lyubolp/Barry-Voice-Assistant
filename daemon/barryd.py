@@ -41,6 +41,9 @@ if len(sys.argv) >= 2:
         elif 'get' == sys.argv[2]:
             response = client.message('config:get:' + sys.argv[3])
             print(response)
+        elif 'unset' == sys.argv[2]:
+            response = client.message('config:unset:' + sys.argv[3])
+            print(response)
     elif 'add' == sys.argv[1]:
         file = os.path.abspath(sys.argv[3])
         phrase = sys.argv[2]
@@ -49,6 +52,9 @@ if len(sys.argv) >= 2:
         print(response)
     elif 'exec' == sys.argv[1]:
         response = client.message('exec:' + ':'.join(sys.argv[2:]))
+        print(response)
+    elif 'remove' == sys.argv[1]:
+        response = client.message('remove:' + sys.argv[2])
         print(response)
     elif 'list' == sys.argv[1]:
         response = client.message('list')
