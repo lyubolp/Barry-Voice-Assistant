@@ -4,8 +4,8 @@ import speech_recognition as sr
 
 from datetime import datetime
 
-AUDIO_SAVE_DIR = "speech-to-text/audio"
-GOOGLE_CREDENTIALS_PATH = "speech-to-text/google_credentials.json"
+AUDIO_SAVE_DIR = "speech_to_text/audio"
+GOOGLE_CREDENTIALS_PATH = "speech_to_text/google_credentials.json"
 
 
 def get_google_credentials() -> str:
