@@ -15,7 +15,12 @@ def execute_weather_action(weather_intent) -> bool:
                              stdout=subprocess.PIPE)
     weather_api_key = process.stdout.decode('utf-8').rstrip()
     if weather_api_key == '':
-        return False
+        try:
+            with open('actions/weather/api_key') as f:
+                weather_api_key = f.read()
+        except FileNotFoundError:
+            speak("You do not have a weather API key")
+            return True
 
     city = weather_intent.get('Location')
     if city is None:
