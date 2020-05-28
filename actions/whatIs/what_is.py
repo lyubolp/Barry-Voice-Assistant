@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from wiki_api import WikiAPI
 import sys
 

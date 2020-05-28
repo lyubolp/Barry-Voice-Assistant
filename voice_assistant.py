@@ -49,6 +49,18 @@ def execute_joke_action() -> bool:
     return True
 
 
+def execute_what_is_action(what_is_intent) -> bool:
+    subject = what_is_intent.get('Subject')
+    if subject is None:
+        return False
+
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'what_is', subject], stdout=subprocess.PIPE)
+    output = process.stdout.decode('utf-8').rstrip()
+
+    speak(output)
+    return True
+
+
 if __name__ == "__main__":
     text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
     if text is None:
@@ -57,13 +69,15 @@ if __name__ == "__main__":
 
     # The daemon has to be started in order to execute a command
     intent = determine_intent(text)
-    success = True
+    success = False
     if intent is None:
-        success = False
+        pass
     elif intent.get('intent_type') == 'WeatherIntent':
         success = execute_weather_action(intent)
     elif intent.get('intent_type') == 'JokeIntent':
         success = execute_joke_action()
+    elif intent.get('intent_type') == 'WhatIsIntent':
+        success = execute_what_is_action(intent)
 
     if not success:
         speak(DEFAULT_TEXT_TO_SAY)
