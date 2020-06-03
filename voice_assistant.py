@@ -29,9 +29,9 @@ def execute_weather_action(weather_intent) -> bool:
         output = process.stdout.decode('utf-8').rstrip()
         if output != '':
             city = output
-
-    if city == '':
-        return False
+        else:
+            speak("No location is specified")
+            return True
 
     process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'weather', weather_api_key, city],
                              stdout=subprocess.PIPE)

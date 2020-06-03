@@ -1,8 +1,15 @@
+"""
+Useful links for building intents:
+https://github.com/MycroftAI/adapt
+https://mycroft-ai.gitbook.io/docs/mycroft-technologies/adapt
+https://mycroft-ai.gitbook.io/docs/mycroft-technologies/adapt/adapt-examples
+"""
 from adapt.engine import IntentDeterminationEngine
 
 from intents.weather_intent import register_weather_intent
 from intents.joke_intent import register_joke_intent
 from intents.what_is_intent import register_what_is_intent
+
 
 engine = IntentDeterminationEngine()
 
