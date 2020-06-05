@@ -1,23 +1,22 @@
+#!/usr/bin/python3
 import requests
 import sys
 
 topic = ''
 
 # powered by "NewsAPI.org"
-if len(sys.argv) != 2:
-    print('Please provide a topic')
+if len(sys.argv) != 3:
+    print('Please provide a topic and API key')
     exit()
 
-topic = sys.argv[1]
-
-with open('api_key') as f:
-    read_data = f.read()
+api_key = sys.argv[1]
+topic = sys.argv[2]
 
 url = 'http://newsapi.org/v2/everything?'
 url += 'q=' + topic + '&'
 url += 'from=2020-05-21&'
 url += 'sortBy=popularity&'
-url += 'apiKey=' + read_data
+url += 'apiKey=' + api_key
 
 response = requests.get(url)
 news_counter = 0
