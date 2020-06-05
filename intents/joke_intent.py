@@ -13,8 +13,8 @@ def register_joke_intent(engine: IntentDeterminationEngine):
         engine.register_entity(jk, "JokeKeyword")
 
     # structure intent
-    weather_intent = IntentBuilder("JokeIntent")\
+    joke_intent = IntentBuilder("JokeIntent")\
         .require("JokeKeyword")\
         .build()
 
-    engine.register_intent_parser(weather_intent)
+    engine.register_intent_parser(joke_intent)

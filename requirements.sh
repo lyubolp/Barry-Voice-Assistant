@@ -15,4 +15,7 @@ chmod +x actions/joke/joke.py
 python3 daemon/barryd.py add what_is actions/whatIs/what_is.py
 chmod +x actions/whatIs/what_is.py
 
+python3 daemon/barryd.py add time actions/time/time.py
+chmod +x actions/time/time.py
+
 python3 daemon/barryd.py stop

@@ -61,6 +61,14 @@ def execute_what_is_action(what_is_intent) -> bool:
     return True
 
 
+def execute_time_action() -> bool:
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'time'], stdout=subprocess.PIPE)
+    output = process.stdout.decode('utf-8').rstrip()
+
+    speak(output)
+    return True
+
+
 if __name__ == "__main__":
     text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
     if text is None:
@@ -78,6 +86,8 @@ if __name__ == "__main__":
         success = execute_joke_action()
     elif intent.get('intent_type') == 'WhatIsIntent':
         success = execute_what_is_action(intent)
+    elif intent.get('intent_type') == 'TimeIntent':
+        success = execute_time_action()
 
     if not success:
         speak(DEFAULT_TEXT_TO_SAY)

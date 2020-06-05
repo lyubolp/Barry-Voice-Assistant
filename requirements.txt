@@ -11,3 +11,4 @@ gcloud==0.18.3
 -e git+https://github.com/mycroftai/adapt@7b8a743fad48968ca58ea0a1962f98f4bfe626c2#egg=adapt_parser
 systemd==0.16.1
 pyjokes==0.6.0
+inflect==4.1.0
