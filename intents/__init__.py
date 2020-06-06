@@ -11,6 +11,7 @@ from intents.joke_intent import register_joke_intent
 from intents.what_is_intent import register_what_is_intent
 from intents.time_intent import register_time_intent
 from intents.news_intent import register_news_intent
+from intents.todo_intent import register_todo_intent
 
 
 engine = IntentDeterminationEngine()
@@ -20,6 +21,7 @@ register_joke_intent(engine)
 register_what_is_intent(engine)
 register_time_intent(engine)
 register_news_intent(engine)
+register_todo_intent(engine)
 
 
 def determine_intent(text: str):
