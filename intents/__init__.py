@@ -10,6 +10,7 @@ from intents.weather_intent import register_weather_intent
 from intents.joke_intent import register_joke_intent
 from intents.what_is_intent import register_what_is_intent
 from intents.time_intent import register_time_intent
+from intents.news_intent import register_news_intent
 
 
 engine = IntentDeterminationEngine()
@@ -18,6 +19,7 @@ register_weather_intent(engine)
 register_joke_intent(engine)
 register_what_is_intent(engine)
 register_time_intent(engine)
+register_news_intent(engine)
 
 
 def determine_intent(text: str):

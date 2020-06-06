@@ -69,8 +69,35 @@ def execute_time_action() -> bool:
     return True
 
 
+def execute_news_action(news_intent) -> bool:
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'config', 'get', 'news_api_key'],
+                             stdout=subprocess.PIPE)
+    news_api_key = process.stdout.decode('utf-8').rstrip()
+    if news_api_key == '':
+        try:
+            with open('actions/news/api_key') as f:
+                news_api_key = f.read()
+        except FileNotFoundError:
+            speak("You do not have a news API key")
+            return True
+
+    topic = news_intent.get('Topic')
+    if topic is not None:
+
+        process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'news', news_api_key, topic],
+                                 stdout=subprocess.PIPE)
+        output = process.stdout.decode('utf-8').rstrip()
+
+        speak(output)
+        return True
+    else:
+        speak('Please provide a topic')
+        return True
+
+
 if __name__ == "__main__":
     text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
+    print(text)
     if text is None:
         speak(DEFAULT_TEXT_TO_SAY)
         exit(0)
@@ -88,6 +115,8 @@ if __name__ == "__main__":
         success = execute_what_is_action(intent)
     elif intent.get('intent_type') == 'TimeIntent':
         success = execute_time_action()
+    elif intent.get('intent_type') == 'NewsIntent':
+        success = execute_news_action(intent)
 
     if not success:
         speak(DEFAULT_TEXT_TO_SAY)
