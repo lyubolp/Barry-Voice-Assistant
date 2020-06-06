@@ -3,3 +3,6 @@ __pycache__/
 .env/
 text-to-speech/mimic1/*
 */api_key
+text-to-speech/mimic1
+env/
+.vscode/
