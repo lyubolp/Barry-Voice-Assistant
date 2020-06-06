@@ -23,7 +23,7 @@ cd mimic1;
 
 ./mimic -t "Hello!" -voice ./voices/new_voice.flitevox
 
-if [ $? -ne 0]; then
+if [ "$?" -ne 0 ]; then
     echo "Failed at running the demo...";
     exit 1;
 fi
