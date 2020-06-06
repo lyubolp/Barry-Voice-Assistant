@@ -82,7 +82,7 @@ def execute_news_action(news_intent) -> bool:
             return True
 
     topic = news_intent.get('Topic')
-    if topic is None:
+    if topic is not None:
 
         process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'news', news_api_key, topic],
                                  stdout=subprocess.PIPE)
@@ -97,6 +97,7 @@ def execute_news_action(news_intent) -> bool:
 
 if __name__ == "__main__":
     text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
+    print(text)
     if text is None:
         speak(DEFAULT_TEXT_TO_SAY)
         exit(0)
