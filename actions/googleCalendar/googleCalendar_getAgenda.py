@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from __future__ import print_function
 import datetime
 import pickle
@@ -8,6 +9,46 @@ from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+
+
+def format_number_as_time(number):
+    if number <= 9:
+        return '0' + str(number)
+    else:
+        return str(number)
+
+
+def format_number_as_month(number):
+    months = {
+        1: "January",
+        2: "February",
+        3: "March",
+        4: "April",
+        5: "May",
+        6: "June",
+        7: "July",
+        8: "August",
+        9: "September",
+        10: "October",
+        11: "November",
+        12: "December"
+    }
+
+    return months[number]
+
+
+def add_suffix_to_number(number):
+    result = str(number)
+    if number%10 == 1:
+        result += 'st'
+    elif number%10 == 2:
+        result += 'nd'
+    elif number%10 == 3:
+        result += 'rd'
+    else:
+        result += 'th'
+
+    return result
 
 
 def main():
@@ -47,8 +88,13 @@ def main():
         print('No upcoming events found.')
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
+        date_as_object = datetime.datetime.fromisoformat(start)
+
+        result = event['summary']
+        result += ' at ' + format_number_as_time(date_as_object.hour) + ':' + format_number_as_time(date_as_object.minute)
+        result += ' on the ' + add_suffix_to_number(date_as_object.day) + ' of ' + format_number_as_month(date_as_object.month)
+        print(result)
 
 
 if __name__ == '__main__':
-    main() 
+    main()
