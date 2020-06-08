@@ -12,6 +12,9 @@ from intents.what_is_intent import register_what_is_intent
 from intents.time_intent import register_time_intent
 from intents.news_intent import register_news_intent
 from intents.todo_intent import register_todo_intent
+from intents.alarm_intent import register_alarm_intent
+from intents.reminder_intent import register_reminder_intent
+from intents.timer_intent import register_timer_intent
 
 
 engine = IntentDeterminationEngine()
@@ -22,6 +25,9 @@ register_what_is_intent(engine)
 register_time_intent(engine)
 register_news_intent(engine)
 register_todo_intent(engine)
+register_alarm_intent(engine)
+register_reminder_intent(engine)
+register_timer_intent(engine)
 
 
 def determine_intent(text: str):

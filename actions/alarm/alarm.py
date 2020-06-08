@@ -5,7 +5,7 @@ import sys
 import datetime
 import time
 
-# Expected order of arguments HH:MM WEEKDAY
+# Expected order of arguments HH MM WEEKDAY
 
 
 def set_alarm(sleep_seconds: int):
@@ -44,23 +44,20 @@ if __name__ == '__main__':
         print("Invalid arguments")
         exit(1)
 
-    hourminutes = sys.argv[1]
-    if len(sys.argv) >= 3:
-        day = sys.argv[2]
+    hours = int(sys.argv[1])
+    minutes = int(sys.argv[2])
+    if len(sys.argv) >= 4:
+        day = sys.argv[3]
     else:
         day = datetime.datetime.now().strftime('%A')
 
     try:
-        datetime.datetime.strptime(day + " " + hourminutes, '%A %H:%M')
+        datetime.datetime.strptime(day + " " + str(hours) + ":" + str(minutes), '%A %H:%M')
     except Exception:
         print("Invalid input")
         exit(1)
 
     weekday_offset_days = get_day_offset_from_today(day)
-
-    hourminutes = hourminutes.split(':')
-    hours = int(hourminutes[0])
-    minutes = int(hourminutes[1])
 
     alarm_time = calculate_alarm_time(weekday_offset_days, hours, minutes)
     sleep_seconds = calcualte_sleep(alarm_time)

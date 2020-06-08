@@ -1,4 +1,5 @@
 import os
+import re
 import subprocess
 
 from intents import determine_intent
@@ -91,7 +92,7 @@ def execute_news_action(news_intent):
         speak('Please provide a topic')
 
 
-def execute_todo_action(todo_intent) -> bool:
+def execute_todo_action(todo_intent):
     action = todo_intent.get('TodoCommand')
     list_type = todo_intent.get('ListType')
 
@@ -117,6 +118,73 @@ def execute_todo_action(todo_intent) -> bool:
         speak("Unknown action")
 
 
+def execute_alarm_action(alarm_intent):
+    time = alarm_intent.get('Time')
+    weekday = alarm_intent.get('Weekday')
+
+    pattern = re.compile(r'(\d\d?)[: ](\d\d)')
+    match = pattern.search(time)
+    if match is None:
+        speak("Please specify time and day for the alarm")
+        return
+
+    hours = match.group(1)
+    minutes = match.group(2)
+
+    if weekday is None:
+        process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'alarm', hours, minutes],
+                                 stdout=subprocess.PIPE)
+        output = process.stdout.decode('utf-8').rstrip()
+        speak(output)
+    else:
+        process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'alarm', hours, minutes, weekday],
+                                 stdout=subprocess.PIPE)
+        output = process.stdout.decode('utf-8').rstrip()
+        speak(output)
+
+
+def execute_reminder_action(reminder_intent):
+    action = reminder_intent.get('Action')
+
+    tokens = reminder_intent.get('Time').split(' ')
+    seconds, minutes, days, hours = '0', '0', '0', '0'
+
+    for i, token in enumerate(tokens):
+        if token == 'seconds':
+            seconds = tokens[i - 1]
+        elif token == 'minutes':
+            minutes = tokens[i - 1]
+        elif token == 'hours':
+            hours = tokens[i - 1]
+        elif token == 'days':
+            days = tokens[i - 1]
+
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'reminder', seconds, minutes, hours, days, action],
+                             stdout=subprocess.PIPE)
+    output = process.stdout.decode('utf-8').rstrip()
+    speak(output)
+
+
+def execute_timer_action(timer_intent):
+    tokens = timer_intent.get('Time').split(' ')
+    seconds, minutes, days, hours = '0', '0', '0', '0'
+
+    for i, token in enumerate(tokens):
+        if token == 'seconds':
+            seconds = tokens[i - 1]
+        elif token == 'minutes':
+            minutes = tokens[i - 1]
+        elif token == 'hours':
+            hours = tokens[i - 1]
+        elif token == 'days':
+            days = tokens[i - 1]
+
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'timer', seconds, minutes, hours, days],
+                             stdout=subprocess.PIPE)
+    output = process.stdout.decode('utf-8').rstrip()
+    speak(output)
+
+
 if __name__ == "__main__":
     text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
     print(text)
@@ -126,17 +194,26 @@ if __name__ == "__main__":
 
     # The daemon has to be started in order to execute a command
     intent = determine_intent(text)
+
     if intent is None:
         speak(DEFAULT_TEXT_TO_SAY)
-    elif intent.get('intent_type') == 'WeatherIntent':
+
+    intent_type = intent.get('intent_type')
+    if intent_type == 'WeatherIntent':
         execute_weather_action(intent)
-    elif intent.get('intent_type') == 'JokeIntent':
+    elif intent_type == 'JokeIntent':
         execute_joke_action()
-    elif intent.get('intent_type') == 'WhatIsIntent':
+    elif intent_type == 'WhatIsIntent':
         execute_what_is_action(intent)
-    elif intent.get('intent_type') == 'TimeIntent':
+    elif intent_type == 'TimeIntent':
         execute_time_action()
-    elif intent.get('intent_type') == 'NewsIntent':
+    elif intent_type == 'NewsIntent':
         execute_news_action(intent)
-    elif intent.get('intent_type') == 'TodoIntent':
+    elif intent_type == 'TodoIntent':
         execute_todo_action(intent)
+    elif intent_type == 'AlarmIntent':
+        execute_alarm_action(intent)
+    elif intent_type == 'ReminderIntent':
+        execute_reminder_action(intent)
+    elif intent_type == 'TimerIntent':
+        execute_timer_action(intent)
