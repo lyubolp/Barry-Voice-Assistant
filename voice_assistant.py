@@ -184,6 +184,13 @@ def execute_timer_action(timer_intent):
     output = process.stdout.decode('utf-8').rstrip()
     speak(output)
 
+def execute_agenda_action(agenda_intent) -> bool:
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'read-google-calendar'], stdout=subprocess.PIPE)
+    output = process.stdout.decode('utf-8').rstrip()
+
+    speak(output)
+    return True
+
 
 if __name__ == "__main__":
     text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
@@ -218,3 +225,5 @@ if __name__ == "__main__":
         execute_reminder_action(intent)
     elif intent_type == 'TimerIntent':
         execute_timer_action(intent)
+    elif intent.get('intent_type') == 'AgendaIntent':
+        execute_agenda_action(intent)
