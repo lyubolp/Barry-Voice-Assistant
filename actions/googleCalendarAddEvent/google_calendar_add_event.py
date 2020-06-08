@@ -14,47 +14,6 @@ from google.auth.transport.requests import Request
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-
-def format_number_as_time(number):
-    if number <= 9:
-        return '0' + str(number)
-    else:
-        return str(number)
-
-
-def format_number_as_month(number):
-    months = {
-        1: "January",
-        2: "February",
-        3: "March",
-        4: "April",
-        5: "May",
-        6: "June",
-        7: "July",
-        8: "August",
-        9: "September",
-        10: "October",
-        11: "November",
-        12: "December"
-    }
-
-    return months[number]
-
-
-def add_suffix_to_number(number):
-    result = str(number)
-    if number % 10 == 1:
-        result += 'st'
-    elif number % 10 == 2:
-        result += 'nd'
-    elif number % 10 == 3:
-        result += 'rd'
-    else:
-        result += 'th'
-
-    return result
-
-
 def load_service():
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
@@ -84,15 +43,95 @@ def load_service():
     return service
 
 
+def is_time_format_valid(time_string) -> bool:
+    if len(time_string) != 5:
+        return False
+
+    if time_string[2] != ':':
+        return False
+
+    if not('0' <= time_string[0] <= '2'):
+        return False
+
+    if not('0' <= time_string[1] <= '9') or not('0' <= time_string[4] <= '9'):
+        return False
+    else:
+        if time_string[0] == '2' and time_string[1] >= '5':
+            return False
+
+    if not('0' <= time_string[3] <= '5'):
+        return False
+
+    return True
+
+def is_date_format_valid(date_string) -> bool:
+    # YYYY-MM-DD
+    if len(date_string) != 10:
+        return False
+
+    if date_string[4] != '-' or date_string[7] != '-':
+        return False
+
+    if not(1 <= date_string[0] <= 2):
+        return False
+
+    if date_string[1] != 9 and date_string[1] != 0:
+        return False
+
+    if not('0' <= date_string[2] <= '9') or not('0' <= date_string[3] <= '9'):
+        return False
+
+    if date_string[5] != '0' and date_string[5] != '1':
+        return False
+    elif date_string[5] == 1:
+        if date_string[6] >= '3':
+            return False
+
+    if not('0' <= date_string[6] <= '9'):
+        return False
+
+    if not('0' <= date_string[8] <= '3'):
+        return False
+
+    if not('0' <= date_string[9] <= '9'):
+        return False
+
+
+def are_arguments_valid(args) -> bool:
+    if len(args) == 4:
+        if not is_date_format_valid(args[2]) or not is_date_format_valid(args[3]):
+            return False
+    elif len(args) == 5:
+        if not is_date_format_valid(args[3]) or not is_date_format_valid(args[4]):
+            return False
+    elif len(args) == 6:
+        if not is_date_format_valid(args[2]) or not is_date_format_valid(args[4]):
+            return False
+        if not is_time_format_valid(args[3]) or not is_time_format_valid(args[5]):
+            return False
+    elif len(args) == 7:
+        if not is_date_format_valid(args[3]) or not is_date_format_valid(args[5]):
+            return False
+        if not is_time_format_valid(args[4]) or not is_time_format_valid(args[6]):
+            return False
+    else:
+        return False
+
+    return True
+
+
 def main():
     service = load_service()
 
-    event_name = ''
-    event_location = ''  # Can be empty
-    start_date = ''  # YYYY-MM-DD
-    start_time = ''  # HH:MM, can be empty.
-    end_date = ''  # YYYY-MM-DD
-    end_time = ''  # HH:MM, can be empty
+    # event_location = ''  # Can be empty
+    # start_date = ''  # YYYY-MM-DD
+    # start_time = ''  # HH:MM, can be empty.
+    # end_date = ''  # YYYY-MM-DD
+    # end_time = ''  # HH:MM, can be empty
+
+    if not are_arguments_valid(sys.argv):
+        print('Invalid arguments, please refer to the README for valid format')
+        return
 
     event_name = sys.argv[1]
 
@@ -139,22 +178,6 @@ def main():
         if amount_of_args == 7:
             event_location = sys.argv[amount_of_args - 5]
             event['location'] = event_location
-    else:
-        print('Invalid amount of arguments. Please visit README.md')
-        return
-
-    # event = {
-    #     'summary': 'TestEvent',
-    #     'location': 'TempLocation',
-    #     'start': {
-    #         'dateTime': datetime.datetime.now().isoformat(),
-    #         'timeZone': 'Europe/Sofia',
-    #     },
-    #     'end': {
-    #         'dateTime': '2020-06-08T14:53:40.615119',
-    #         'timeZone': 'Europe/Sofia',
-    #     },
-    # }
 
     event = service.events().insert(calendarId='primary', body=event).execute()
 
