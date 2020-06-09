@@ -1,0 +1,10 @@
+[Unit]
+Description=Barry speech recognition
+
+[Service]
+Type=forking
+User=root
+ExecStart=/PATH-TO-BARRY-DAEMON/barryd.py start
+
+[Install]
+WantedBy=multi-user.target

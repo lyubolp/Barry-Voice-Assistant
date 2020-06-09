@@ -73,7 +73,7 @@ class GenericDaemon:
 
         self.__forkProcess()
         self.__decoupleEnv()
-        self.__preventTty()
+        # self.__preventTty()
         self.__redirectFileDescriptors()
         self.__registerOnCloseMethod()
         self.__createPidFile()
