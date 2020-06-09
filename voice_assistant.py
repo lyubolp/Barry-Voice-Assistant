@@ -197,6 +197,7 @@ if __name__ == "__main__":
 
     if intent is None:
         speak(DEFAULT_TEXT_TO_SAY)
+        exit(0)
 
     intent_type = intent.get('intent_type')
     if intent_type == 'WeatherIntent':
