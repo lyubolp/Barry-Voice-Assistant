@@ -16,6 +16,7 @@ from intents.alarm_intent import register_alarm_intent
 from intents.reminder_intent import register_reminder_intent
 from intents.timer_intent import register_timer_intent
 from intents.google_calendar_agenda_intent import register_agenda_intent
+from intents.google_calendar_add_event_intent import register_add_event_intent
 
 
 engine = IntentDeterminationEngine()
@@ -30,6 +31,7 @@ register_alarm_intent(engine)
 register_reminder_intent(engine)
 register_timer_intent(engine)
 register_agenda_intent(engine)
+register_add_event_intent(engine)
 
 
 def determine_intent(text: str):

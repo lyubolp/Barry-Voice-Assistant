@@ -192,8 +192,19 @@ def execute_agenda_action(agenda_intent) -> bool:
     return True
 
 
+def execute_add_event_action(add_event_intent) -> bool:
+    print(add_event_intent.get("event_name"))
+    print(add_event_intent.get("start_date"))
+    print(add_event_intent.get("end_date"))
+    print(add_event_intent.get("location"))
+    print(add_event_intent.get("start_time"))
+    print(add_event_intent.get("end_time"))
+
+    return True
+
+
 if __name__ == "__main__":
-    text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
+    text = speech_to_text.recognize(speech_to_text.get_audio(timeout=10, phrase_time_limit=10, save=False))
     print(text)
     if text is None:
         speak(DEFAULT_TEXT_TO_SAY)
@@ -227,3 +238,5 @@ if __name__ == "__main__":
         execute_timer_action(intent)
     elif intent.get('intent_type') == 'AgendaIntent':
         execute_agenda_action(intent)
+    elif intent.get('intent_type') == 'AddEventIntent':
+        execute_add_event_action(intent)
