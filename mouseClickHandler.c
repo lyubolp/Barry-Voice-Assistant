@@ -35,13 +35,13 @@ int main(int argc, char** argv)
             y = data[2];
             
             if (left == 1) {
-				int pid = fork();
-				if (pid == 0) {
-					execlp("python3", "python3", "./voice_assistant.py", (char *)NULL);
-				} else {
-					wait(NULL);
-				}
-			}
+	        int pid = fork();
+	        if (pid == 0) {
+		    execlp("python3", "python3", "./voice_assistant.py", (char *)NULL);
+		} else {
+		    wait(NULL);
+		}
+	    }
         }   
     }
     return 0; 
