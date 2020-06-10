@@ -1,7 +1,7 @@
 import subprocess
 
 from pymouse import PyMouseEvent
-
+from voice_assistant import speak
 
 class VoiceAssistantEvent(PyMouseEvent):
     def __init__(self):
@@ -15,5 +15,6 @@ class VoiceAssistantEvent(PyMouseEvent):
 
 
 if __name__ == '__main__':
+    speak("Hello")
     assistant = VoiceAssistantEvent()
     assistant.run()

@@ -12,3 +12,6 @@ gcloud==0.18.3
 systemd==0.16.1
 pyjokes==0.6.0
 inflect==4.1.0
+PyUserInput==0.1.11
+python-xlib==0.27
+xlib==0.21
