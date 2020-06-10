@@ -4,6 +4,7 @@ import subprocess
 
 from intents import determine_intent
 from speech_to_text import speech_to_text
+import re
 
 DEFAULT_TEXT_TO_SAY = "Sorry, I could not understand"
 
@@ -184,9 +185,62 @@ def execute_timer_action(timer_intent):
     output = process.stdout.decode('utf-8').rstrip()
     speak(output)
 
+def execute_agenda_action(agenda_intent) -> bool:
+    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'read-google-calendar'], stdout=subprocess.PIPE)
+    output = process.stdout.decode('utf-8').rstrip()
+
+    speak(output)
+    return True
+
+
+def execute_add_event_action(input) -> bool:
+    event_name_re = re.search('called (?P<event_name>.+?)(?=from|to|at|on|until)', input)
+    location_re = re.search('at (?P<location>[a-zA-Z0-9 ]+?)(?=from|to|at|on|until)', input)
+    start_date_re = re.search('(on the)(?<!until the) ((?P<start_date>\d+?)(?=st|nd|rd|th))', input)
+    start_time_re = re.search('at (?P<start_time>([0-9]{1,4}:?[0-9]{0,2} ?(p\.m\.|a\.m\.)?)).*', input)
+    end_date_re = re.search('(until the) ((?P<end_date>\d+?)(?=st|nd|rd|th))', input)
+    end_time_re = re.search('(?<=until the \d{2}(st|nd|rd|th) of) \w*? at (?P<end_time>([0-9]{1,4}:?[0-9]{0,2} ?(p\.m\.|a\.m\.)?))', input)
+
+    event_name = event_name_re.groupdict()['event_name']
+
+    if location_re.groupdict()['location'] is not None:
+        location = location_re.groupdict()['location']
+        start_date = start_date_re.groupdict()['start_date']
+        end_date = end_date_re.groupdict()['end_date']
+        if start_time_re.groupdict()['start_time'] is not None:
+            start_time = start_time_re.groupdict()['start_time']
+            end_time = end_time_re.groupdict()['end_time']
+            process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'add-event', event_name, location,
+                                      start_date, start_time, end_date, end_time],
+                                     stdout=subprocess.PIPE)
+        else:
+            process = subprocess.run(
+                ['python3', 'daemon/barryd.py', 'exec', 'add-event', event_name, location, start_date,
+                 end_date],
+                stdout=subprocess.PIPE)
+    else:
+        start_date = start_date_re.groupdict()['start_date']
+        end_date = end_date_re.groupdict()['end_date']
+        if start_time_re.groupdict()['start_time'] is not None:
+            start_time = start_time_re.groupdict()['start_time']
+            end_time = end_time_re.groupdict()['end_time']
+            process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'add-event', event_name,
+                                      start_date, start_time, end_date, end_time],
+                                     stdout=subprocess.PIPE)
+        else:
+            process = subprocess.run(
+                ['python3', 'daemon/barryd.py', 'exec', 'add-event', event_name, start_date,
+                 end_date],
+                stdout=subprocess.PIPE)
+
+    output = process.stdout.decode('utf-8').rstrip()
+
+    speak(output)
+    return True
+
 
 if __name__ == "__main__":
-    text = speech_to_text.recognize(speech_to_text.get_audio(save=False))
+    text = speech_to_text.recognize(speech_to_text.get_audio(timeout=10, phrase_time_limit=10, save=False))
     print(text)
     if text is None:
         speak(DEFAULT_TEXT_TO_SAY)
@@ -218,3 +272,7 @@ if __name__ == "__main__":
         execute_reminder_action(intent)
     elif intent_type == 'TimerIntent':
         execute_timer_action(intent)
+    elif intent.get('intent_type') == 'AgendaIntent':
+        execute_agenda_action(intent)
+    elif intent.get('intent_type') == 'AddEventIntent':
+        execute_add_event_action(text)
