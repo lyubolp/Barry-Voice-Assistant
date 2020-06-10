@@ -14,3 +14,6 @@ ExecStart=${projectRoot}/daemon/barryd.py start
 [Install]
 WantedBy=multi-user.target
 EOF
+
+systemctl enable barry
+systemctl start barry
