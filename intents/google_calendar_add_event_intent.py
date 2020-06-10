@@ -1,3 +1,4 @@
+#!/bin/python3
 from adapt.engine import IntentDeterminationEngine
 from adapt.intent import IntentBuilder
 
@@ -50,25 +51,25 @@ def register_add_event_intent(engine: IntentDeterminationEngine):
     # start_time
     engine.register_regex_entity('at (?P<start_time>([0-9]{1,4}:?[0-9]{0,2} ?(p\.m\.|a\.m\.)?)).*')
 
-    # end_time
-    engine.register_regex_entity('(?<=until the \d{2}(st|nd|rd|th) of) \w*? at (?P<end_time>([0-9]{1,4}:?[0-9]{0,2} ?(p\.m\.|a\.m\.)?))')
-
     # end_date, when only date is present
     engine.register_regex_entity('(to the) ((?P<end_date>\d+?)(?=st|nd|rd|th))')
 
     # end_date, when time is present
     engine.register_regex_entity('(until the) ((?P<end_date>\d+?)(?=st|nd|rd|th))')
 
+    # end_time
+    engine.register_regex_entity(
+        '(?<=until the \d{2}(st|nd|rd|th) of) \w*? at (?P<end_time>([0-9]{1,4}:?[0-9]{0,2} ?(p\.m\.|a\.m\.)?))')
 
     # structure intent
     add_event_intent = IntentBuilder("AddEventIntent") \
-        .require("AddEventKeyword") \
-        .optionally("event_name") \
-        .optionally("location") \
-        .optionally("start_date") \
-        .optionally("start_time") \
-        .optionally("end_date") \
-        .optionally("end_time") \
+        .require("AddEventKeyword")\
+        .optionally("event_name")\
+        .optionally("location")\
+        .optionally("start_date")\
+        .optionally("start_time")\
+        .optionally("end_date")\
+        .optionally("end_time")\
         .build()
 
     engine.register_intent_parser(add_event_intent)
