@@ -75,7 +75,8 @@ def clear_items(list_type: str):
     with open(STORAGE_PATH) as json_file:
         data = json.load(json_file)
 
-        del data[list_type]
+        if list_type in data:
+            del data[list_type]
 
     with open(STORAGE_PATH, 'w') as json_file:
         json.dump(data, json_file)
