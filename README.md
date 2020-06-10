@@ -16,3 +16,9 @@
 - `remind me to stop the oven in 10 minutes ` 
 - `set a timer for 30 seconds` 
 
+
+## How to setup:
+- Clone this repo
+- Run `requirements.sh`
+- Run `install_actions.sh`
+- Run `install.sh` from the `text-to-speech` directory
