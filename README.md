@@ -28,12 +28,13 @@
 
 
 ## How to setup:
-- Clone this repo
-- Run `requirements.sh`
-- Run `install.sh`
+- Clone this repository - `git clone https://github.com/lyubolp/Barry-Voice-Assistant.git`
+- Go into the Barry-Voice-Assistant directory
+- Run `requirements.sh` with root privileges 
 - Create a virtual environment: `virtualenv -p python3 .env `
 - Activate the virtual environment: `source .env/bin/activate `
 - Install python dependencies: `pip install -r requirements.txt `
+- Run `install.sh` with root privileges
 
 ## How to run:
 
