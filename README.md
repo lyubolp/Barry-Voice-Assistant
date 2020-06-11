@@ -1,4 +1,14 @@
-# IoT-Project
+# Barry voice assistant
+
+![Logo](https://raw.githubusercontent.com/lyubolp/Barry-Voice-Assistant/master/logo.png)
+
+​	Barry is a voice assistant which can help you with your everyday tasks. It's focus is on privacy, usability and extensibility. It is written in Python, and it's modular architecture allows for the user to write his own actions, in order to customize Barry according to his personal needs. The voice assistant can run headless on a Raspberry Pi board (hence the name - Barry). 
+
+​	Barry is built on the following technologies:
+
+- (Google Speech-To-Text)[https://cloud.google.com/speech-to-text] (for speech recognition)
+- [Adapt Intent Parser](https://github.com/MycroftAI/adapt) (used for linking voice commands with actions)
+- [Mimic1 Text-To-Speech engine](https://github.com/MycroftAI/mimic1) (the voice of Barry)
 
 ## Examples for voice commands
 
