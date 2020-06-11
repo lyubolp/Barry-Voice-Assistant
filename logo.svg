@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.0 (1.0+r73+1)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="24"
+     inkscape:window-x="0"
+     inkscape:window-height="1027"
+     inkscape:window-width="1920"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="555.75471"
+     inkscape:cx="175.62995"
+     inkscape:zoom="0.7"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <text
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       id="text12"
+       y="181.96002"
+       x="15.183973"
+       style="font-style:normal;font-weight:normal;font-size:73.3649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#2ca089;fill-opacity:1;stroke:none;stroke-width:1.83413"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#2ca089;stroke-width:1.83413"
+         y="181.96002"
+         x="15.183973"
+         id="tspan10"
+         sodipodi:role="line">Barry</tspan></text>
+    <path
+       id="path853"
+       d="M -71.267393,118.80545 Z"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       id="path891"
+       d="m 43.623493,106.86412 c 0.538608,-1.91849 6.825266,-7.707337 11.857625,-10.918662 10.861971,-6.931415 23.637371,-9.299494 36.073343,-6.686642 6.763303,1.420994 13.248539,4.351032 19.205289,8.676962 2.1907,1.590937 6.23386,5.258712 6.61986,6.005232 0.70613,1.36567 0.47768,3.125 -0.54356,4.18595 -0.66452,0.69037 -1.20452,0.94486 -2.06617,0.97374 -1.05691,0.0354 -1.66817,-0.3339 -3.90011,-2.35639 -7.07741,-6.41329 -15.040957,-10.082407 -24.514712,-11.294883 -1.359933,-0.174047 -2.653706,-0.187597 -6.201251,-0.06495 -3.919638,0.135531 -4.738188,0.207959 -6.515808,0.57661 -9.183617,1.90462 -16.630958,6.066293 -23.539519,13.154193 -2.148183,2.20395 -2.404231,2.35336 -3.838901,2.24016 -1.872209,-0.14772 -3.213806,-2.43351 -2.636086,-4.49132 z m 10.989489,12.67753 c 0.182105,-0.67626 0.48911,-1.08518 2.062227,-2.74684 8.547664,-9.02877 20.448565,-12.83186 32.204506,-10.29137 5.927586,1.28097 11.369175,4.14527 16.159185,8.50573 2.22294,2.0236 2.53739,2.5103 2.59422,4.01531 0.0351,0.9302 -0.0235,1.22063 -0.37802,1.87285 -0.69529,1.2791 -1.96851,1.90279 -3.29727,1.61516 -0.63399,-0.13723 -1.06767,-0.44885 -2.88455,-2.07268 -4.007988,-3.58212 -7.886892,-5.70014 -12.636419,-6.89993 -2.751731,-0.69513 -4.067363,-0.81267 -7.697632,-0.68775 -3.058341,0.10524 -3.56935,0.16283 -5.343096,0.60214 -5.685437,1.40812 -10.171124,4.07899 -14.662698,8.73047 -2.066442,2.14001 -2.74738,2.40927 -4.29902,1.6999 -0.898378,-0.41071 -1.538203,-1.15463 -1.838648,-2.13779 -0.247107,-0.80862 -0.243772,-1.23602 0.01722,-2.2052 z m 10.869623,13.1784 c 0.202782,-0.90602 0.62115,-1.54455 1.936105,-2.95493 1.688182,-1.81069 3.059966,-2.89637 5.091282,-4.02944 3.18339,-1.77569 5.663018,-2.41606 9.367316,-2.41913 2.677656,-0.002 4.350933,0.28666 6.652364,1.14845 2.495313,0.93439 5.1927,2.6972 7.194826,4.70202 1.454156,1.4561 1.761333,2.02567 1.804108,3.34512 0.06377,1.97395 -1.215526,3.50516 -2.978369,3.56424 -0.969367,0.0325 -1.722337,-0.37997 -2.941325,-1.61117 -2.391331,-2.41529 -5.195382,-3.801 -8.424281,-4.16313 -4.268212,-0.47871 -8.881752,1.45723 -11.737113,4.92513 -0.477109,0.57946 -1.12558,1.19698 -1.44104,1.37226 -1.418963,0.78843 -3.273361,0.19702 -4.112034,-1.31144 -0.364033,-0.65476 -0.562743,-1.89377 -0.411839,-2.56798 z"
+       style="fill:#2ca089;fill-opacity:1;stroke-width:0.157385" />
+    <text
+       inkscape:export-ydpi="96"
+       inkscape:export-xdpi="96"
+       id="text895"
+       y="195.24104"
+       x="67.918015"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#2ca089;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#2ca089;fill-opacity:1;stroke-width:0.264583"
+         y="195.24104"
+         x="67.918015"
+         id="tspan893"
+         sodipodi:role="line">Voice assistant</tspan></text>
+  </g>
+</svg>
