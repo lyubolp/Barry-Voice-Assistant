@@ -34,7 +34,17 @@
 - Create a virtual environment: `virtualenv -p python3 .env `
 - Activate the virtual environment: `source .env/bin/activate `
 - Install python dependencies: `pip install -r requirements.txt `
+- Install `systemd` as global python dependency `sudo pip3 install systemd`
 - Run `install.sh` with root privileges
+
+## Credentials:
+
+Some service require credentials or API keys in order for them to be used:
+
+- Google Speech-to-text (here)[https://console.cloud.google.com/apis/library/speech.googleapis.com] - enable the API, then click `Manage`, then `Credentials`, then create a `Service account`. Save the credentials as `google_credentials.json` in the directory `<project_folder>/speech_to_text`
+- Weather API - (here)[https://openweathermap.org/]. After you get the key, place it in a file called `api_key` in the following directory: `<project_folder>/actions/weather`
+- News API - (here)[https://newsapi.org/] After you get the key, place it in a file called `api_key` in the following directory: `<project_folder>/actions/news`
+- Google Calendar - (here)[https://developers.google.com/calendar/quickstart/python] - copy the file `credentials.json` to the following directories `<project_folder>/actions/googleCalendarAddEvent` and `<project_folder>/actions/googleCalendarGetAgenda`
 
 ## How to run:
 
