@@ -1,3 +1,5 @@
+echo "Starting daemon"
+sudo daemon/barryd.py start
 echo "Installing actions..."
 ./install_actions.sh
 echo "Done !"
