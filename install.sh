@@ -1,5 +1,6 @@
 echo "Starting daemon"
-sudo daemon/barryd.py start
+./add-daemon-to-systemd.sh
+
 echo "Installing actions..."
 ./install_actions.sh
 echo "Done !"
@@ -11,4 +12,3 @@ cd text-to-speech
 echo "Done !"
 
 cd ..
-./add-daemon-to-systemd.sh
