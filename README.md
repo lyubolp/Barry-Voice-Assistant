@@ -30,8 +30,7 @@
 ## How to setup:
 - Clone this repo
 - Run `requirements.sh`
-- Run `install_actions.sh`
-- Run `install.sh` from the `text-to-speech` directory
+- Run `install.sh`
 - Create a virtual environment: `virtualenv -p python3 .env `
 - Activate the virtual environment: `source .env/bin/activate `
 - Install python dependencies: `pip install -r requirements.txt `
