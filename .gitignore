@@ -6,3 +6,4 @@ text-to-speech/mimic1/*
 text-to-speech/mimic1
 env/
 .vscode/
+mouseClickHandler.bin

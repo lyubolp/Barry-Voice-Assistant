@@ -32,3 +32,11 @@
 - Run `requirements.sh`
 - Run `install_actions.sh`
 - Run `install.sh` from the `text-to-speech` directory
+- Create a virtual environment: `virtualenv -p python3 .env `
+- Activate the virtual environment: `source .env/bin/activate `
+- Install python dependencies: `pip install -r requirements.txt `
+
+## How to run:
+
+- Run `python3 voice_assistant.py` for a single voice command
+- Compile `mouseClickHandler.c` and run the executable for a voice command on every left mouse button click
