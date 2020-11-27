@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div id="main-content">
+        <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
+        <h1>Hello, {{ user.name }}</h1>
+        <div id="send-button" class="main-button w3-circle barry-bg-color white-color w3-ripple">
+            <span class="material-icons">keyboard_voice</span>
+        </div>
+    </div>
+</body>
+</html>
