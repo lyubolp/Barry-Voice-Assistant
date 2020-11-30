@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import 'main.scss';
 
 body{
@@ -19,12 +20,10 @@ h1{
   text-align: center;
 }
 
-
 #send-button{
   @extend .center-item;
   width: 15vh;
   height: 15vh;
-
   span{
     font-size: 150%;
   }

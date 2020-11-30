@@ -4,7 +4,6 @@ $white: #eee5e9;
 $red: #982649;
 $yellow: #fde74c;
 
-
 .barry-bg-color{
   background-color: $barry-color;
 }
@@ -19,7 +18,7 @@ $yellow: #fde74c;
   align-items: center;
   justify-content: center;
 }
-#main-content{
+#main-content {
   width: 90vw;
   height: 80vh;
   padding: 1vw;
@@ -28,5 +27,4 @@ $yellow: #fde74c;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
 }
