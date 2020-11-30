@@ -7,11 +7,7 @@ text-to-speech/mimic1
 env/
 .vscode/
 mouseClickHandler.bin
-
 venv/
 server.conf
-
-
-# frontend stuff
 */.idea
 frontend/venv/*
