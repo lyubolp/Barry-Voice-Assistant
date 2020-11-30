@@ -1,3 +1,18 @@
+.barry-bg-color {
+  background-color: #2ca089;
+}
+
+.white-color {
+  color: #eee5e9;
+}
+
+.center-item, #send-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 body {
   background-color: #383d3b;
   display: flex;
@@ -27,21 +42,6 @@ h1 {
   justify-content: space-between;
 }
 
-.barry-bg-color {
-  background-color: #2ca089;
-}
-
-.white-color {
-  color: #eee5e9;
-}
-
-.center-item, #send-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 #send-button {
   width: 15vh;
   height: 15vh;
@@ -50,4 +50,4 @@ h1 {
   font-size: 150%;
 }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=index.css.map */
