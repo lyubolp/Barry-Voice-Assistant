@@ -1,8 +1,4 @@
-$barry-color: #2ca089;
-$black: #383d3b;
-$white: #eee5e9;
-$red: #982649;
-$yellow: #fde74c;
+@import 'main.scss';
 
 body{
   background-color: $black;
@@ -32,21 +28,6 @@ h1{
   align-items: center;
   justify-content: space-between;
 
-}
-
-.barry-bg-color{
-  background-color: $barry-color;
-}
-
-.white-color{
-  color: $white;
-}
-
-.center-item{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 #send-button{
