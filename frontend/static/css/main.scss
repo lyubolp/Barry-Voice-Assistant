@@ -1,0 +1,21 @@
+$barry-color: #2ca089;
+$black: #383d3b;
+$white: #eee5e9;
+$red: #982649;
+$yellow: #fde74c;
+
+
+.barry-bg-color{
+  background-color: $barry-color;
+}
+
+.white-color{
+  color: $white;
+}
+
+.center-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
