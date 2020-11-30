@@ -3,17 +3,17 @@
 Request to `/register`
 ```json
 {
-    email: "user@mail.com",
-    password: "myPassword",
+    "email": "user@mail.com",
+    "password": "myPassword",
 }
 ```
 
 Response from `/register`
 ```json
 {
-    status: "success",
-    token: "a665a4592042",
-    errors: [],
+    "status": "success",
+    "token": "a665a4592042",
+    "errors": [],
 }
 ```
 
@@ -22,17 +22,17 @@ Response from `/register`
 Request to `/login`
 ```json
 {
-    email: "user@mail.com",
-    password: "myPassword",
+    "email": "user@mail.com",
+    "password": "myPassword",
 }
 ```
 
 Response from `/login`
 ```json
 {
-    status: "success",
-    token: "a665a4592042",
-    errors: [],
+    "status": "success",
+    "token": "a665a4592042",
+    "errors": [],
 }
 ```
 
@@ -41,19 +41,19 @@ Response from `/login`
 Request to `/execute?command=say&text=hello`
 ```json
 {
-    token: "a665a4592042"
+    "token": "a665a4592042"
 }
 ```
 
 Response from `/execute?command=say&text=hello`
 ```json
 {
-    status: "success",
-    message: "Hello",
-    details: {
-        full_response: "Hello",
+    "status": "success",
+    "message": "Hello",
+    "details": {
+        "full response": "Hello",
     },
-    errors: [],
+    "errors": [],
 }
 ```
 
@@ -62,22 +62,22 @@ Response from `/execute?command=say&text=hello`
 Request to `/list-config`
 ```json
 {
-    token: "a665a4592042"
+    "token": "a665a4592042"
 }
 ```
 
 Response from `/execute?command=say&text=hello`
 ```json
 {
-    status: "success",
+    "status": "success",
     "global config": {
-        city: "Sofia",
+        "city": "Sofia",
     },
     "user config": {
-        google_api_key: "653a665a45a665a45",
-        city: "London",
+        "google api key": "653a665a45a665a45",
+        "city": "London",
     },
-    errors: [],
+    "errors": [],
 }
 ```
 
@@ -86,15 +86,15 @@ Response from `/execute?command=say&text=hello`
 Request to `/set-config?key=city&value=Sofia`
 ```json
 {
-    token: "a665a4592042"
+    "token": "a665a4592042"
 }
 ```
 
 Response from `/set-config?key=city&value=Sofia`
 ```json
 {
-    status: "success",
-    errors: [],
+    "status": "success",
+    "errors": [],
 }
 ```
 
@@ -103,20 +103,20 @@ Response from `/set-config?key=city&value=Sofia`
 Request to `/get-config?key=city`
 ```json
 {
-    token: "a665a4592042"
+    "token": "a665a4592042"
 }
 ```
 
 Response from `/set-config?key=city`
 ```json
 {
-    status: "success",
+    "status": "success",
     "global config": {
-        city: "Sofia",
+        "city": "Sofia",
     },
     "user config": {
-        city: "London",
+        "city": "London",
     },
-    errors: [],
+    "errors": [],
 }
 ```
