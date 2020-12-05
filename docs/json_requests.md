@@ -38,14 +38,14 @@ Response from `/login`
 
 ### Execute
 
-Request to `/execute?command=say&text=hello`
+Request to `/execute/command/?text=hello&other_argument=whatever`
 ```json
 {
     "token": "a665a4592042"
 }
 ```
 
-Response from `/execute?command=say&text=hello`
+Response from `/execute/command/?text=hello&other_argument=whatever`
 ```json
 {
     "status": "success",
@@ -66,7 +66,7 @@ Request to `/list-config`
 }
 ```
 
-Response from `/execute?command=say&text=hello`
+Response from `/list-config`
 ```json
 {
     "status": "success",
@@ -107,7 +107,7 @@ Request to `/get-config?key=city`
 }
 ```
 
-Response from `/set-config?key=city`
+Response from `/get-config?key=city`
 ```json
 {
     "status": "success",
