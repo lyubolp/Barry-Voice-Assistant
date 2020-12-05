@@ -3,8 +3,6 @@ from configs import BARRY_CONFIG
 import dbcon as DB
 from executer import execute_command
 
-DEFAULT_TEXT_TO_SAY = "Sorry, I could not understand"
-
 app = Flask(__name__)
 
 @app.route('/register', methods=['POST'])
@@ -85,6 +83,7 @@ def execute(command):
         response['message'] = message
         response['details'] = details
     except Exception as err:
+        response['message'] = BARRY_CONFIG['default_response']
         response['errors'].append(str(err))
     if response['errors']:
         return jsonify(response)
