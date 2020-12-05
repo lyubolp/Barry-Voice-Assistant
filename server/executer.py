@@ -1,5 +1,5 @@
 from intents import determine_intent
-from typing import Dict
+from typing import Dict, List
 from configs import ACTIONS
 import os
 import subprocess
@@ -40,9 +40,9 @@ def execute_command(text: str, args: Dict[str, str]):
         return execute_add_event_action(text)
 
 
-def _execute(action) -> str:
+def _execute(action, args: List[str] = [], named_args: Dict[str, str] = {}) -> str:
 
-    # TODO Handle arguements
+    # TODO Handle arguments
 
     if action in ACTIONS:
         path = ACTIONS[action]['path']
@@ -54,12 +54,18 @@ def _execute(action) -> str:
 
     fileStat = os.stat(full_path)
     sudo = ['sudo', '-u', '#' + str(fileStat.st_uid)]
-    executable = [full_path]
+    executable = [full_path] + args
     out = subprocess.Popen(sudo + executable, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = out.communicate()
     stdout = stdout.decode('utf-8')
     try:
-        return json.loads(stdout)
+        response = json.loads(stdout)
+        if 'error' in response:
+            raise Exception(response['error'])
+        elif 'message' in response and 'details' in response:
+            return response['message'], response['details']
+        else:
+            raise Exception("Ivanlid output from action")
     except:
         return stdout, {}
 
@@ -114,14 +120,9 @@ def execute_joke_action():
 def execute_what_is_action(what_is_intent):
     subject = what_is_intent.get('Subject')
     if subject is None:
-        speak("Please specify a subject")
-        return
+        raise Exception("No subject specified")
 
-    process = subprocess.run(
-        ['python3', 'daemon/barryd.py', 'exec', 'what_is', subject], stdout=subprocess.PIPE)
-    output = process.stdout.decode('utf-8').rstrip()
-
-    speak(output)
+    return _execute('what_is', [subject])
 
 
 def execute_time_action():

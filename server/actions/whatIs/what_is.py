@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from wiki_api import WikiAPI
+import json
 import sys
 
 api = WikiAPI()
@@ -16,4 +17,4 @@ if len(sys.argv) == 2:
             print(section_tuple[1])
             break
 else:
-    print('Please provide an argument')
+    print(json.dumps({'error': 'No argument provided'}))

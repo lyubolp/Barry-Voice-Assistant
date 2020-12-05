@@ -64,8 +64,8 @@ def logout():
         return jsonify(response)
 
     # TODO black lists?
-
-    response['status'] = 'success'
+    response['errors'].append('Not implemented')
+    response['status'] = 'fail'
     return jsonify(response)
 
 @app.route('/execute/<command>/', methods=['GET'])
@@ -85,6 +85,7 @@ def execute(command):
     except Exception as err:
         response['message'] = BARRY_CONFIG['default_response']
         response['errors'].append(str(err))
+    
     if response['errors']:
         return jsonify(response)
 

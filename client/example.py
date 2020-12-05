@@ -75,14 +75,32 @@ from client import *
 
 
 
+# Tell me a joke
+# try:
+#     token = login('luchevz@gmail.com', '123123')
+
+#     # Execute command
+#     try:
+#         response = execute_command(token, "tell me a joke", {'name': 'Ivan', 'Joke type': 'Dad'})
+#         print("Response: ", response)
+#     except Exception as err:
+#         print(err)
+
+#     print()
+# except Exception as err:
+#     print("Failed to login :(")
+#     print(err)
+
+# What is X
 try:
     token = login('luchevz@gmail.com', '123123')
 
     # Execute command
     try:
-        response = execute_command(token, "tell me a joke", {'name': 'Ivan', 'Joke type': 'Dad'})
+        response = execute_command(token, "what is football")
         print("Response: ", response)
     except Exception as err:
+        print("Failed to execute command :(")
         print(err)
 
     print()
