@@ -1,5 +1,7 @@
 import configparser
 import os
+import json
+
 SERVER_CONFIG = configparser.RawConfigParser()
 SERVER_CONFIG.optionxform = str
 
@@ -15,3 +17,7 @@ BARRY_CONFIG.optionxform = str
 with open(current_dir + "defaults.conf") as stream:
     BARRY_CONFIG.read_string("[dummy]\n" + stream.read())
     BARRY_CONFIG = dict(BARRY_CONFIG['dummy'])
+
+
+with open(current_dir + 'actions.json') as stream:
+    ACTIONS = json.load(stream)
