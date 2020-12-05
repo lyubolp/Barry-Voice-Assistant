@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify
 from configs import BARRY_CONFIG
 import dbcon as DB
-# from intents import determine_intent
-# from intents import execute_command
+from executer import execute_command
 
 DEFAULT_TEXT_TO_SAY = "Sorry, I could not understand"
 
@@ -81,16 +80,14 @@ def execute(command):
     if response['errors']:
         return jsonify(response)
 
-    # TODO
-    # try:
-    #     message, details = execute_command(command, request.args)
-    #     response['message'] = message
-    #     response['details'] = details
-    # except Exception as err:
-    #     response['errors'].append(str(err))
-    # if response['errors']:
-    #     return jsonify(response)
-
+    try:
+        message, details = execute_command(command, request.args)
+        response['message'] = message
+        response['details'] = details
+    except Exception as err:
+        response['errors'].append(str(err))
+    if response['errors']:
+        return jsonify(response)
 
     response['status'] = 'success'
     return jsonify(response)
