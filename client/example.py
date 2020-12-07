@@ -141,3 +141,39 @@ from client import *
 # except Exception as err:
 #     print("Failed to login :(")
 #     print(err)
+
+
+"""What's the time"""
+# try:
+#     token = login('luchevz@gmail.com', '123123')
+
+#     # Execute command
+#     try:
+#         response = execute_command(token, "what's the time")
+#         print("Response: ", response)
+#     except Exception as err:
+#         print("Failed to execute command :(")
+#         print(err)
+
+#     print()
+# except Exception as err:
+#     print("Failed to login :(")
+#     print(err)
+
+
+"""News"""
+# try:
+#     token = login('luchevz@gmail.com', '123123')
+
+#     # Execute command
+#     try:
+#         response = execute_command(token, "news about sport")
+#         print("Response: ", response)
+#     except Exception as err:
+#         print("Failed to execute command :(")
+#         print(err)
+
+#     print()
+# except Exception as err:
+#     print("Failed to login :(")
+#     print(err)

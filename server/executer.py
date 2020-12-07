@@ -25,7 +25,7 @@ def execute_command(text: str, args: Dict[str, str]):
     elif intent_type == 'TimeIntent':
         return execute_time_action()
     elif intent_type == 'NewsIntent':
-        return execute_news_action(intent)
+        return execute_news_action(intent, args)
     elif intent_type == 'TodoIntent':
         return execute_todo_action(intent)
     elif intent_type == 'AlarmIntent':
@@ -71,19 +71,6 @@ def _execute(action, args: List[str] = [], named_args: Dict[str, str] = {}) -> s
     else:
         raise Exception("Invalid response from action")
 
-def __getArgs(self, phrase: str):
-    if 'scripts' in self.config.keys():
-        if phrase in self.config['scripts']:
-            args = self.config['scripts'][phrase]['args']
-            argsParsed = []
-            for arg in args:
-                if arg in self.config.keys():
-                    argsParsed.append(self.config[arg])
-                else:
-                    argsParsed.append('-')
-            return argsParsed
-    return []
-
 
 def execute_weather_action(weather_intent, args):
     if 'weather_api_key' not in args:
@@ -112,35 +99,21 @@ def execute_what_is_action(what_is_intent):
 
 
 def execute_time_action():
-    process = subprocess.run(
-        ['python3', 'daemon/barryd.py', 'exec', 'time'], stdout=subprocess.PIPE)
-    output = process.stdout.decode('utf-8').rstrip()
-
-    speak(output)
+    return _execute('time')
 
 
-def execute_news_action(news_intent):
-    process = subprocess.run(['python3', 'daemon/barryd.py', 'config', 'get', 'news_api_key'],
-                             stdout=subprocess.PIPE)
-    news_api_key = process.stdout.decode('utf-8').rstrip()
-    if news_api_key == '':
-        try:
-            with open('actions/news/api_key') as f:
-                news_api_key = f.read()
-        except FileNotFoundError:
-            speak("You do not have a news API key")
-            return
+def execute_news_action(news_intent, args):
+    if 'news_api_key' not in args:
+        raise Exception("You do not have a news API key")
+    news_api_key = args['news_api_key']
 
     topic = news_intent.get('Topic')
-    if topic is not None:
+    if topic is None and 'topic' not in args:
+        raise Exception("No topic is specified")
+    if topic is None:
+        topic = args['topic']
 
-        process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'news', news_api_key, topic],
-                                 stdout=subprocess.PIPE)
-        output = process.stdout.decode('utf-8').rstrip()
-
-        speak(output)
-    else:
-        speak('Please provide a topic')
+    return _execute('news', [news_api_key, topic])
 
 
 def execute_todo_action(todo_intent):
