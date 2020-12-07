@@ -54,7 +54,7 @@ def list_config(email):
 
     if 'config' in user:
         return user['config']
-    return []
+    return {}
 
 def set_config(email, key, val):
     try:

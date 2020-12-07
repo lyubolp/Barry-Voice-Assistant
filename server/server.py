@@ -3,7 +3,9 @@ from configs import BARRY_CONFIG
 import dbcon as DB
 from executer import execute_command
 
+
 app = Flask(__name__)
+
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -30,6 +32,7 @@ def register():
     response['status'] = 'success'
     return jsonify(response)
 
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -38,7 +41,7 @@ def login():
 
     if 'email' not in data:
         response['errors'].append('No email provided')
-    if 'email' not in data:
+    if 'password' not in data:
         response['errors'].append('No password provided')
 
     if response['errors']:
@@ -68,6 +71,7 @@ def logout():
     response['status'] = 'fail'
     return jsonify(response)
 
+
 @app.route('/execute/<command>/', methods=['GET'])
 def execute(command):
     data = request.json
@@ -78,8 +82,10 @@ def execute(command):
     if response['errors']:
         return jsonify(response)
 
+    args = {**request.args, **BARRY_CONFIG, **DB.list_config(email)}
+
     try:
-        message, details = execute_command(command, request.args)
+        message, details = execute_command(command, args)
         response['message'] = message
         response['details'] = details
     except Exception as err:
@@ -91,6 +97,7 @@ def execute(command):
 
     response['status'] = 'success'
     return jsonify(response)
+
 
 @app.route('/list-config', methods=['GET'])
 def list_config():
@@ -111,6 +118,7 @@ def list_config():
 
     response['status'] = 'success'
     return jsonify(response)
+
 
 @app.route('/set-config', methods=['POST'])
 def set_config():
@@ -195,4 +203,9 @@ def get_config():
     return jsonify(response)
 
 
-app.run(debug=True)
+def main():
+    app.run(host='0.0.0.0', debug=True)
+
+
+if __name__ == '__main__':
+    main()

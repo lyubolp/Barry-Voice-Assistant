@@ -17,7 +17,7 @@ def execute_command(text: str, args: Dict[str, str]):
 
     intent_type = intent.get('intent_type')
     if intent_type == 'WeatherIntent':
-        return execute_weather_action(intent)
+        return execute_weather_action(intent, args)
     elif intent_type == 'JokeIntent':
         return execute_joke_action()
     elif intent_type == 'WhatIsIntent':
@@ -57,17 +57,19 @@ def _execute(action, args: List[str] = [], named_args: Dict[str, str] = {}) -> s
     executable = [full_path] + args
     out = subprocess.Popen(sudo + executable, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = out.communicate()
-    stdout = stdout.decode('utf-8')
+    stdout = stdout.decode('utf-8').strip()
+
     try:
         response = json.loads(stdout)
-        if 'error' in response:
-            raise Exception(response['error'])
-        elif 'message' in response and 'details' in response:
-            return response['message'], response['details']
-        else:
-            raise Exception("Ivanlid output from action")
     except:
         return stdout, {}
+
+    if 'error' in response:
+        raise Exception(response['error'])
+    elif 'message' in response and 'details' in response:
+        return response['message'], response['details']
+    else:
+        raise Exception("Invalid response from action")
 
 def __getArgs(self, phrase: str):
     if 'scripts' in self.config.keys():
@@ -83,34 +85,18 @@ def __getArgs(self, phrase: str):
     return []
 
 
-def execute_weather_action(weather_intent):
-    process = subprocess.run(['python3', 'daemon/barryd.py', 'config', 'get', 'weather_api_key'],
-                             stdout=subprocess.PIPE)
-    weather_api_key = process.stdout.decode('utf-8').rstrip()
-    if weather_api_key == '':
-        try:
-            with open('actions/weather/api_key') as f:
-                weather_api_key = f.read()
-        except FileNotFoundError:
-            speak("You do not have a weather API key")
-            return
+def execute_weather_action(weather_intent, args):
+    if 'weather_api_key' not in args:
+        raise Exception("You do not have a weather API key")
+    weather_api_key = args['weather_api_key']
 
     city = weather_intent.get('Location')
+    if city is None and 'city' not in args:
+        raise Exception("No location is specified")
     if city is None:
-        process = subprocess.run(['python3', 'daemon/barryd.py', 'config', 'get', 'city'],
-                                 stdout=subprocess.PIPE)
-        output = process.stdout.decode('utf-8').rstrip()
-        if output != '':
-            city = output
-        else:
-            speak("No location is specified")
-            return
+        city = args['city']
 
-    process = subprocess.run(['python3', 'daemon/barryd.py', 'exec', 'weather', weather_api_key, city],
-                             stdout=subprocess.PIPE)
-    output = process.stdout.decode('utf-8').rstrip()
-
-    speak(output)
+    return _execute('weather', [weather_api_key, city])
 
 
 def execute_joke_action():
