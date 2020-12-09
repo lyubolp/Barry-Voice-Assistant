@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/alarm.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="{{ url_for('static', filename='js/alarm.js') }}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div id="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 24 24" width="100%" fill="white">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5
+            8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0
+            16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+        </svg>
+    </div>
+    {% if alarm.ring %}
+        <h1>Alarm for {{ alarm.time }}</h1>
+        <div id="send-button" class="main-button w3-circle barry-bg-color white-color w3-ripple">
+            <svg xmlns="http://www.w3.org/2000/svg" height="50%" viewBox="0 0 24 24" width="50%" fill="white">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 6c3.87 0 7 3.13 7 7 0 .84-.16 1.65-.43 2.4l1.52 1.52c.58-1.19.91-2.51.91-3.92 0-4.97-4.03-9-9-9-1.41
+             0-2.73.33-3.92.91L9.6 6.43C10.35 6.16 11.16 6 12 6zm10-.28l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM2.92 2.29L1.65
+             3.57 2.98 4.9l-1.11.93 1.42 1.42 1.11-.94.8.8C3.83 8.69 3 10.75 3 13c0 4.97 4.02 9 9 9 2.25 0 4.31-.83
+             5.89-2.2l2.2 2.2 1.27-1.27L3.89 3.27l-.97-.98zm13.55 16.1C15.26 19.39 13.7 20 12 20c-3.87 0-7-3.13-7-7
+             0-1.7.61-3.26 1.61-4.47l9.86 9.86zM8.02 3.28L6.6 1.86l-.86.71 1.42 1.42.86-.71z"/>
+            </svg>
+        </div>
+        <audio id="alarm-sound" autoplay loop>
+            <source src="{{ url_for('static', filename='alarm-sound.mp3') }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+    {% else %}
+        <div id="submit-alarm-time">
+            <form action="submit-alarm" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.alarm_time.label }}<br>
+                    {{ form.alarm_time }}
+                </p>
+                <button id="submit-btn" class="main-button w3-circle barry-bg-color white-color w3-ripple">Submit</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
