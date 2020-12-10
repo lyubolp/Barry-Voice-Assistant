@@ -5,6 +5,7 @@ https://mycroft-ai.gitbook.io/docs/mycroft-technologies/adapt
 https://mycroft-ai.gitbook.io/docs/mycroft-technologies/adapt/adapt-examples
 """
 from adapt.engine import IntentDeterminationEngine
+from typing import Dict
 
 from intents.weather_intent import register_weather_intent
 from intents.joke_intent import register_joke_intent
@@ -17,7 +18,6 @@ from intents.reminder_intent import register_reminder_intent
 from intents.timer_intent import register_timer_intent
 from intents.google_calendar_agenda_intent import register_agenda_intent
 from intents.google_calendar_add_event_intent import register_add_event_intent
-
 
 engine = IntentDeterminationEngine()
 

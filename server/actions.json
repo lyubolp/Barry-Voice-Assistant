@@ -1,0 +1,38 @@
+{
+    "weather": {
+        "path": "weather/weather.py",
+        "args": []
+    },
+    "timer": {
+        "path": "timer/timer.py",
+        "args": []
+    },
+    "joke": {
+        "path": "joke/joke.py",
+        "args": []
+    },
+    "what_is": {
+        "path": "whatIs/what_is.py",
+        "args": []
+    },
+    "time": {
+        "path": "time/time.py",
+        "args": []
+    },
+    "news": {
+        "path": "news/news.py",
+        "args": []
+    },
+    "todo": {
+        "path": "todo/todo.py",
+        "args": []
+    },
+    "alarm": {
+        "path": "alarm/alarm.py",
+        "args": []
+    },
+    "reminder": {
+        "path": "reminder/reminder.py",
+        "args": []
+    }
+}

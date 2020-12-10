@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import requests
 import sys
+import json
 
 
 def execute_action(api_key, city_name, country_code) -> str:
@@ -15,14 +16,14 @@ def execute_action(api_key, city_name, country_code) -> str:
 
     resp = requests.get(url=url)
     if resp.status_code != 200:
-        return "Invalid api key or city name"
+        return json.dumps({'error': 'Invalid api key or city name'})
 
     weather_like = resp.json()['weather'][0]['main']
     temperature = resp.json()['main']['temp']
     result = 'The weather in ' + city_name + ' is ' + weather_like + \
              '. The temperature is ' + str(temperature) + ' degrees celsius'
 
-    return result
+    return json.dumps({'message': result, 'details': resp.json()})
 
 
 if __name__ == '__main__':
@@ -37,4 +38,3 @@ if __name__ == '__main__':
         country = sys.argv[3]
 
     print(execute_action(key, city, country))
-
