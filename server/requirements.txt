@@ -6,7 +6,7 @@ cffi==1.14.4
 chardet==3.0.4
 click==7.1.2
 crcmod==1.7
-cryptography==2.6.1
+cryptography==3.2
 distro-info==0.21
 dnspython==2.0.0
 entrypoints==0.3
