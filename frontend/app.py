@@ -7,6 +7,8 @@ from config import Config
 from client import client
 from types import SimpleNamespace
 
+from news import News
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -46,27 +48,30 @@ def news():
         token = client.login('luchevz@gmail.com', '123123')
         # Execute command
         try:
-            response = client.execute_command(token, "news about sport")
-
+            response = client.execute_command(token, "news about tech")
             news_objects = []
-
-            print("Response: ", response)
-
             for news_piece in response['details']:
                 print(news_piece)
-                news_objects.append(json.loads(news_piece))
-            # x = json.loads(response, object_hook=lambda d: SimpleNamespace(**d))
-            # print(x.name, x.hometown.name, x.hometown.id)
+                author = news_piece['author']
+                content = news_piece['content']
+                description = news_piece['description']
+                published_at = news_piece['publishedAt']
+                source = (news_piece['source']['id'], news_piece['source']['name'])
+                title = news_piece['title']
+                url = news_piece['url']
+                url_image = news_piece['urlToImage']
+
+                news_objects.append(News(author, content, description, published_at, source, title, url, url_image))
+
         except Exception as err:
             print("Failed to execute command :(")
             print(err)
 
-        print()
     except Exception as err:
         print("Failed to login :(")
         print(err)
 
-    return render_template('news.html', title='News')
+    return render_template('news.html', title='News', news=news_objects)
 
 
 if __name__ == '__main__':
