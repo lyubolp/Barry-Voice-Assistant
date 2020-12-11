@@ -9,6 +9,7 @@
 
 from typing import Tuple, List
 from enum import Enum
+from image import Image
 
 
 class ContentType(Enum):
@@ -50,3 +51,11 @@ class Content:
         :return: None
         """
         self.content.append((ContentType.TEXT, text))
+
+    def add_image(self, img: Image):
+        """
+        Adds an Image object to the content, representing an image from the Wikipedia article
+        :param img: the Image object (see image.py) for documentation
+        :return: None
+        """
+        self.content.append((ContentType.IMAGE, img))
