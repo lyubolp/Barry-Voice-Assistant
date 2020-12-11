@@ -245,12 +245,8 @@ class WikiAPI:
         request = session.get(url=url, params=request_params)
         data = request.json()
 
-        for item in data["parse"]["langlinks"]:
-            print(item)
-
         # Assuming EN is always first. I know this is bad practise.
         filtered = list(filter(lambda lang: lang['lang'] == 'en', data["parse"]["langlinks"]))
-        print(filtered)
         return ""
 
 
