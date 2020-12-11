@@ -1,11 +1,8 @@
-import json
-
 from flask import Flask, render_template, flash, redirect
 
 from alarm import SendAlarmData
 from config import Config
 from client import client
-from types import SimpleNamespace
 
 from news import News
 
@@ -72,6 +69,27 @@ def news():
         print(err)
 
     return render_template('news.html', title='News', news=news_objects)
+
+
+@app.route('/what-is')
+def what_is():
+    try:
+        token = client.login('luchevz@gmail.com', '123123')
+
+        # Execute command
+        try:
+            response = client.execute_command(token, "what is football")
+            print("Response: ", response)
+        except Exception as err:
+            print("Failed to execute command :(")
+            print(err)
+
+        print()
+    except Exception as err:
+        print("Failed to login :(")
+        print(err)
+
+    return render_template('what-is.html', title='What is ?')
 
 
 if __name__ == '__main__':
