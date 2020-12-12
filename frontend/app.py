@@ -1,10 +1,11 @@
-from flask import Flask, render_template, flash, redirect
+from flask import Flask, render_template, flash, redirect, request
 
 from alarm import SendAlarmData
 from config import Config
 from client import client
 
 from news import News
+from whatIs import WhatIs
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -75,11 +76,10 @@ def news():
 def what_is():
     try:
         token = client.login('luchevz@gmail.com', '123123')
-
         # Execute command
         try:
-            response = client.execute_command(token, "what is football")
-            print("Response: ", response)
+            response = client.execute_command(token, "what is " + request.args['article'])
+            article = WhatIs(response['details']['title'], response['details']['content'], response['details']['image_url'])
         except Exception as err:
             print("Failed to execute command :(")
             print(err)
@@ -89,7 +89,7 @@ def what_is():
         print("Failed to login :(")
         print(err)
 
-    return render_template('what-is.html', title='What is ?')
+    return render_template('what-is.html', title='What is ?', article=article)
 
 
 if __name__ == '__main__':
