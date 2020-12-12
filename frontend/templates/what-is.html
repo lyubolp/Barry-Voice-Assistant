@@ -5,5 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    Hello
+        <div class="w3-card-4 wiki-card">
+            <div class="title-header">
+                <p> {{ article.title() }} </p>
+            </div>
+            <div class="image-content">
+                <img src="http:{{ article.image() }}" alt="title"/>
+                <div>
+                    <p style=> {{ article.content() }} </p>
+                </div>
+            </div>
+        </div>
 {% endblock %}
