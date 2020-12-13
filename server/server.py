@@ -85,9 +85,10 @@ def execute(command):
     args = {**request.args, **BARRY_CONFIG, **DB.list_config(email)}
 
     try:
-        message, details = execute_command(command, args)
+        message, details, action = execute_command(command, args)
         response['message'] = message
         response['details'] = details
+        response['action'] = action
     except Exception as err:
         response['message'] = BARRY_CONFIG['default_response']
         response['errors'].append(str(err))
