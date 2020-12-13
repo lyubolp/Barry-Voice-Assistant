@@ -67,7 +67,7 @@ def _execute(action, args: List[str] = [], named_args: Dict[str, str] = {}) -> s
     if 'error' in response:
         raise Exception(response['error'])
     elif 'message' in response and 'details' in response:
-        return response['message'], response['details']
+        return response['message'], response['details'], action
     else:
         raise Exception("Invalid response from action")
 
