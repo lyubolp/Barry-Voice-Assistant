@@ -62,7 +62,7 @@ def _execute(action, args: List[str] = [], named_args: Dict[str, str] = {}) -> s
     try:
         response = json.loads(stdout)
     except:
-        return stdout, {}
+        return stdout, {}, action
 
     if 'error' in response:
         raise Exception(response['error'])
