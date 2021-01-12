@@ -92,5 +92,24 @@ def what_is():
     return render_template('what-is.html', title='What is ?', article=article)
 
 
+@app.route('/to-do-list')
+def to_do_list():
+    try:
+        token = client.login('luchevz@gmail.com', '123123')
+        # Execute command
+        try:
+            response = client.execute_command(token, "add shopping bread")
+            print(response)
+        except Exception as err:
+            print("Failed to execute command :(")
+            print(err)
+
+        print()
+    except Exception as err:
+        print("Failed to login :(")
+        print(err)
+    return render_template('to-do-list.html')
+
+
 if __name__ == '__main__':
     app.run()
