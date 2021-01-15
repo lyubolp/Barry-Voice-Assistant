@@ -1,10 +1,13 @@
-from flask import Flask, render_template, flash, redirect, request
+from flask import Flask, render_template, flash, redirect, request, url_for, make_response
+from flask_login import LoginManager, current_user, login_user
 
 from alarm import SendAlarmData
+from client.client import register, login
 from config import Config
 from client import client
 
 from news import News
+from user import User
 from whatIs import WhatIs
 
 app = Flask(__name__)
@@ -14,10 +17,17 @@ app.config.from_object(Config)
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {
-        'username': 'lyubolp',
-        'name': 'Lyubo'
-    }
+
+    token = request.cookies.get('userToken')
+
+    if token is None:
+        # user is not logged in
+        user = None
+    else:
+        user = {
+            'username': request.cookies.get('username')
+        }
+
     return render_template('index.html', title='Home', user=user)
 
 
@@ -90,6 +100,33 @@ def what_is():
         print(err)
 
     return render_template('what-is.html', title='What is ?', article=article)
+
+
+@app.route('/login')
+def loginPath():
+    return render_template("login.html")
+
+
+@app.route('/handle-login', methods=['POST'])
+def handle_login():
+    try:
+        username = request.form['username']
+        password = request.form['password']
+        # token = login('luchevz@gmail.com', '123123')
+        print(username, password)
+        token = login(username, password)
+
+        resp = make_response(redirect('/'))
+        resp.set_cookie('userToken', token)
+        resp.set_cookie('username', username)
+        return resp
+
+    except Exception as err:
+        print("Failed to register user :(")
+        print(err)
+        print()
+
+        return err
 
 
 if __name__ == '__main__':
