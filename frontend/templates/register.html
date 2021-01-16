@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="w3-container w3-half w3-margin-top" id="register-panel">
+        {% if errors != None %}
+            {% for error in errors %}
+                <p> {{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <form class="w3-container w3-card-4" method="post" action="/handle-register" enctype="multipart/form-data">
+            <p>
+                <input name="username" class="w3-input" type="text" required>
+                <label>Username</label>
+            </p>
+            <p>
+                <input name="password" class="w3-input" type="password" required>
+                <label>Password</label>
+            </p>
+            <p>
+                <input name="passwordRepeat" class="w3-input" type="password" required>
+                <label>Repeat password</label>
+            </p>
+            <button class="w3-button w3-section w3-teal w3-ripple">Register</button>
+
+        </form>
+    </div>
+
+{% endblock %}

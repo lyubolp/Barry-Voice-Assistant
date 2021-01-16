@@ -1,3 +1,5 @@
+from hashlib import sha256
+
 from flask import Flask, render_template, flash, redirect, request, url_for, make_response
 from flask_login import LoginManager, current_user, login_user
 
@@ -14,19 +16,19 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 
+def isUserLoggedIn() -> bool:
+    return request.cookies.get('userToken') is None
+
 @app.route('/')
 @app.route('/index')
 def index():
-
-    token = request.cookies.get('userToken')
-
-    if token is None:
-        # user is not logged in
-        user = None
-    else:
+    if not request.cookies.get('userToken') is None:
+        token = request.cookies.get('userToken')
         user = {
             'username': request.cookies.get('username')
         }
+    else:
+        user = None
 
     return render_template('index.html', title='Home', user=user)
 
@@ -104,7 +106,10 @@ def what_is():
 
 @app.route('/login')
 def loginPath():
-    return render_template("login.html")
+    if isUserLoggedIn():
+        return redirect('/')
+    else:
+        return render_template("login.html")
 
 
 @app.route('/handle-login', methods=['POST'])
@@ -127,6 +132,34 @@ def handle_login():
         print()
 
         return err
+
+
+@app.route('/register')
+def registerPath():
+    if request.cookies.get('userToken') is None:
+        return render_template("register.html")
+    else:
+        return redirect('/')
+
+
+@app.route('/handle-register', methods=['POST'])
+def handle_register():
+    username = request.form['username']
+    password = request.form['password']
+    password_repeat = request.form['passwordRepeat']
+
+    if password == password_repeat:
+        try:
+            token = register(username, password)
+        except Exception as err:
+            return render_template('register.html', errors=err.args)
+
+        resp = make_response(redirect('/'))
+        resp.set_cookie('userToken', token)
+        resp.set_cookie('username', username)
+        return resp
+    else:
+        return render_template('register.html', errors=['Passwords don\'t match'])
 
 
 if __name__ == '__main__':
