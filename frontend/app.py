@@ -116,6 +116,15 @@ def registerPath():
         return redirect('/')
 
 
+@app.route('/logout')
+def logout():
+    if request.cookies.get('userToken') is not None:
+        resp = make_response(redirect('/'))
+        resp.set_cookie('userToken', "None", expires=0)
+
+    return resp
+
+
 @app.route('/handle-register', methods=['POST'])
 def handle_register():
     username = request.form['username']
