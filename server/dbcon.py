@@ -25,7 +25,7 @@ def register(email, password):
     }
     try:
         _result = barry_db.users.insert_one(new_user)
-        return encode_auth_token(email).decode()
+        return encode_auth_token(email)
     except DuplicateKeyError:
         raise DuplicateKeyError("User already exists")
     except:
