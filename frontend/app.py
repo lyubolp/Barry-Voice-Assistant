@@ -16,12 +16,13 @@ app.config.from_object(Config)
 
 
 def isUserLoggedIn() -> bool:
-    return request.cookies.get('userToken') is None
+    return not request.cookies.get('userToken') is None and request.cookies.get('userToken') is not 'None'
+
 
 @app.route('/')
 @app.route('/index')
 def index():
-    if not request.cookies.get('userToken') is None:
+    if isUserLoggedIn():
         token = request.cookies.get('userToken')
         user = {
             'username': request.cookies.get('username')
@@ -32,34 +33,13 @@ def index():
     return render_template('index.html', title='Home', user=user)
 
 
-@app.route('/news')
+@app.route('/news', methods=['POST'])
 def news():
-    try:
-        token = client.login('luchevz@gmail.com', '123123')
-        # Execute command
-        try:
-            response = client.execute_command(token, "news about tech")
-            news_objects = []
-            for news_piece in response['details']:
-                print(news_piece)
-                author = news_piece['author']
-                content = news_piece['content']
-                description = news_piece['description']
-                published_at = news_piece['publishedAt']
-                source = (news_piece['source']['id'], news_piece['source']['name'])
-                title = news_piece['title']
-                url = news_piece['url']
-                url_image = news_piece['urlToImage']
 
-                news_objects.append(News(author, content, description, published_at, source, title, url, url_image))
-
-        except Exception as err:
-            print("Failed to execute command :(")
-            print(err)
-
-    except Exception as err:
-        print("Failed to login :(")
-        print(err)
+    response = request.form['command-response']
+    news_objects = []
+    for news_piece in response:
+        news_objects.append(News(news_piece))
 
     return render_template('news.html', title='News', news=news_objects)
 
@@ -86,10 +66,10 @@ def what_is():
 
 @app.route('/login')
 def loginPath():
-    if request.cookies.get('userToken') is None:
-        return render_template("login.html")
-    else:
+    if isUserLoggedIn():
         return redirect('/')
+    else:
+        return render_template("login.html")
 
 
 @app.route('/handle-login', methods=['POST'])
@@ -110,10 +90,10 @@ def handle_login():
 
 @app.route('/register')
 def registerPath():
-    if request.cookies.get('userToken') is None:
-        return render_template("register.html")
-    else:
+    if isUserLoggedIn():
         return redirect('/')
+    else:
+        return render_template("register.html")
 
 
 @app.route('/logout')
