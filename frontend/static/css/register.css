@@ -1,0 +1,56 @@
+.barry-bg-color {
+  background-color: #2ca089;
+}
+
+.white-color {
+  color: #eee5e9;
+}
+
+.center-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-content {
+  width: 90vw;
+  height: 80vh;
+  padding: 1vw;
+  margin: 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body {
+  background-color: #383d3b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#register-panel {
+  width: 100%;
+  margin: 0px;
+}
+#register-panel form {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+#register-panel p {
+  width: 80%;
+}
+#register-panel button {
+  width: 80%;
+}
+
+/*# sourceMappingURL=register.css.map */
