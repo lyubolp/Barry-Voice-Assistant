@@ -16,5 +16,8 @@
         {% block content %}
         {% endblock %}
     </div>
+    {% if audio_file %}
+        <audio autoplay src="{{ audio_file }}" hidden></audio>
+    {% endif %}
 </body>
 </html>
