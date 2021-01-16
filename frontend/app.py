@@ -46,21 +46,8 @@ def news():
 
 @app.route('/what-is')
 def what_is():
-    try:
-        token = client.login('luchevz@gmail.com', '123123')
-        # Execute command
-        try:
-            response = client.execute_command(token, "what is " + request.args['article'])
-            article = WhatIs(response['details']['title'], response['details']['content'], response['details']['image_url'])
-        except Exception as err:
-            print("Failed to execute command :(")
-            print(err)
-
-        print()
-    except Exception as err:
-        print("Failed to login :(")
-        print(err)
-
+    response = request.form['command-response']
+    article = WhatIs(response)
     return render_template('what-is.html', title='What is ?', article=article)
 
 
