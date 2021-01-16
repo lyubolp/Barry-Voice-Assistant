@@ -19,12 +19,13 @@ from google.cloud import texttospeech
 import requests
 import json
 
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
 
 def isUserLoggedIn() -> bool:
-    return not request.cookies.get('userToken') is None and request.cookies.get('userToken') is not 'None'
+    return not request.cookies.get('userToken') is None and request.cookies.get('userToken') != 'None'
 
 
 @app.route('/')
@@ -40,9 +41,11 @@ def index():
 
     return render_template('index.html', title='Home', user=user)
 
+
 @app.route('/audio/<path:filename>', methods=['GET'])
 def download_file(filename):
     return send_file('static/audio/' + filename)
+
 
 @app.route('/speech_to_text/', methods=['POST'])
 def speech_to_text():
@@ -69,6 +72,8 @@ def speech_to_text():
                 result = result.alternatives[0].transcript
                 print("Transcript: {}".format(result))
                 return result
+
+            return "ERROR: Google failed to transcribe!"
 
         except Exception as err:
             print("Failed to transcribe audio:")
@@ -112,25 +117,41 @@ def text_to_speech(text: str) -> str:
         
     return filename
 
+
 @app.route('/action_handler', methods=["POST"])
 def action_handler():
     try:
-        recognized_string = request.form["recognized_string"]
-        # print("recognized_string = ", recognized_string)
-        # response = client.execute_command(token, transcribed_text)
-        response = {"action": "test", "text": recognized_string, "path": "test"}
-        if response["action"] == "test":
-            print("json:", json.dumps(response))
-            return redirect(url_for('test_func', commandResponse = json.dumps(response)))
-        # elif for other actions
+        if isUserLoggedIn():
+            token = request.cookies.get('userToken')
+        else:
+            return redirect(url_for(login))
+
+        transcribed_text = request.form["recognized_string"]
+
+        if transcribed_text == "ERROR: Google failed to transcribe!":
+            return redirect(url_for('index'))
+
+        # transcribed_text = "news about sports"
+
+        response = client.execute_command(token, transcribed_text)
+        print(type(response))
+        print(response)
+        if response == 'Could not recognize command':
+            return redirect(url_for('index'))
+            
+        response = {'action': 'test', 'text': 'This is a test string'}
+        target_url = response['action']
+        print(target_url)
+
+        return requests.post('http://127.0.0.1:5000/' + target_url, json = response).text
 
     except Exception as err:
         print(err)
 
-@app.route('/test')
+
+@app.route('/test', methods=['POST'])
 def test_func():
-    response = request.args["commandResponse"]
-    response = json.loads(response)
+    response = request.json
     text = response['text']
 
     audio_file = text_to_speech(text)
@@ -138,14 +159,16 @@ def test_func():
     # should take user info from cookie, but just for the test:
     user = {
         'username': 'lyubolp',
-        'name': 'Lyubo' }
+        'name': 'Lyubo' 
+        }
 
     return render_template('index.html', title="Test", user = user, audio_file = audio_file)
+
 
 @app.route('/news', methods=['POST'])
 def news():
 
-    response = request.form['command-response']
+    response = request.json['details']
     news_objects = []
     for news_piece in response:
         news_objects.append(News(news_piece))
