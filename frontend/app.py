@@ -151,14 +151,17 @@ def news():
     for news_piece in response:
         news_objects.append(News(news_piece))
 
-    return render_template('news.html', title='News', news=news_objects)
+    audio_file = text_to_speech(request.json['message'])
+    return render_template('news.html', title='News', news=news_objects, audio_file = audio_file)
 
 
-@app.route('/what-is', methods=['POST'])
+@app.route('/what_is', methods=['POST'])
 def what_is():
-    response = request.form['command-response']
+    response = request.json['details']
     article = WhatIs(response)
-    return render_template('what-is.html', title='What is ?', article=article)
+
+    audio_file = text_to_speech(response['content'])
+    return render_template('what-is.html', title='What is ?', article=article, audio_file = audio_file)
 
 
 @app.route('/login')
