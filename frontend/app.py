@@ -3,12 +3,13 @@ from hashlib import sha256
 from flask import Flask, render_template, flash, redirect, request, url_for, make_response, send_file
 from flask_login import LoginManager, current_user, login_user
 
-from client.client import register, login
+from client.client import register, login, execute_command
 from config import Config
 from client import client
 
 from news import News
 from user import User
+from weather import Weather
 from whatIs import WhatIs
 
 import os
@@ -226,5 +227,14 @@ def handle_register():
         return render_template('register.html', errors=['Passwords don\'t match'])
 
 
+@app.route('/weather', methods=['POST'])
+def weather():
+    response = request.json['details']
+    weather = Weather(response)
+    return render_template("weather.html", weather=weather)
+
+
 if __name__ == '__main__':
     app.run()
+    # Uncomment this to run at port 80, and comment the line above
+    # app.run(host='0.0.0.0', port=80)
