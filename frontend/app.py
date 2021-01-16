@@ -3,7 +3,6 @@ from hashlib import sha256
 from flask import Flask, render_template, flash, redirect, request, url_for, make_response
 from flask_login import LoginManager, current_user, login_user
 
-from alarm import SendAlarmData
 from client.client import register, login
 from config import Config
 from client import client
@@ -31,25 +30,6 @@ def index():
         user = None
 
     return render_template('index.html', title='Home', user=user)
-
-
-@app.route('/alarm')
-def alarm():
-    alarm = {
-        'ring': False,
-        'time': '08:30',
-    }
-    form = SendAlarmData()
-    return render_template('alarm.html', title='Alarm', alarm=alarm, form=form)
-
-
-@app.route('/submit-alarm', methods=['GET', 'POST'])
-def submit_alarm():
-    form = SendAlarmData()
-    if form.validate_on_submit():
-        print(form.alarm_time.data)
-        return redirect('/')
-    return render_template('alarm.html', title='Alarm', alarm=alarm, form=form)
 
 
 @app.route('/news')
@@ -106,32 +86,26 @@ def what_is():
 
 @app.route('/login')
 def loginPath():
-    if isUserLoggedIn():
-        return redirect('/')
-    else:
+    if request.cookies.get('userToken') is None:
         return render_template("login.html")
+    else:
+        return redirect('/')
 
 
 @app.route('/handle-login', methods=['POST'])
 def handle_login():
+    username = request.form['username']
+    password = request.form['password']
     try:
-        username = request.form['username']
-        password = request.form['password']
-        # token = login('luchevz@gmail.com', '123123')
-        print(username, password)
         token = login(username, password)
-
-        resp = make_response(redirect('/'))
-        resp.set_cookie('userToken', token)
-        resp.set_cookie('username', username)
-        return resp
-
     except Exception as err:
-        print("Failed to register user :(")
-        print(err)
-        print()
+        user_friendly_errors = [error for error_list in err.args for error in error_list]
+        return render_template('login.html', errors=user_friendly_errors)
 
-        return err
+    resp = make_response(redirect('/'))
+    resp.set_cookie('userToken', token)
+    resp.set_cookie('username', username)
+    return resp
 
 
 @app.route('/register')
@@ -152,7 +126,8 @@ def handle_register():
         try:
             token = register(username, password)
         except Exception as err:
-            return render_template('register.html', errors=err.args)
+            user_friendly_errors = [error for error_list in err.args for error in error_list]
+            return render_template('register.html', errors=user_friendly_errors)
 
         resp = make_response(redirect('/'))
         resp.set_cookie('userToken', token)
