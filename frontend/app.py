@@ -1,6 +1,6 @@
 from hashlib import sha256
 
-from flask import Flask, render_template, flash, redirect, request, url_for, make_response
+from flask import Flask, render_template, flash, redirect, request, url_for, make_response, send_file
 from flask_login import LoginManager, current_user, login_user
 
 from client.client import register, login
@@ -39,6 +39,10 @@ def index():
         user = None
 
     return render_template('index.html', title='Home', user=user)
+
+@app.route('/audio/<path:filename>', methods=['GET'])
+def download_file(filename):
+    return send_file('static/audio/' + filename)
 
 @app.route('/speech_to_text/', methods=['POST'])
 def speech_to_text():
