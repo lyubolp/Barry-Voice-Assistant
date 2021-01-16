@@ -1,8 +1,8 @@
 class WhatIs:
-    def __init__(self, _title: str, _content: str, _image: str):
-        self.__title = _title
-        self.__content = _content
-        self.__image = _image
+    def __init__(self, response: dict):
+        self.__title = response['title']
+        self.__content = response['content']
+        self.__image = response['image_url']
 
     def title(self) -> str:
         return self.__title
