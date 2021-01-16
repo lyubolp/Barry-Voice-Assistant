@@ -1,13 +1,13 @@
 class News:
-    def __init__(self, _author: str, _content: str, _description: str, _published_at: str, _source: (str, str), _title: str, _url: str, _url_image: str):
-        self.__author = _author
-        self.__content = _content
-        self.__description = _description
-        self.__published_at = _published_at
-        self.__source = _source
-        self.__title = _title
-        self.__url = _url
-        self.__url_image = _url_image
+    def __init__(self, news_piece):
+        self.__author = news_piece['author']
+        self.__content = news_piece['content']
+        self.__description = news_piece['description']
+        self.__published_at = news_piece['publishedAt']
+        self.__source = (news_piece['source']['id'], news_piece['source']['name'])
+        self.__title = news_piece['title']
+        self.__url = news_piece['url']
+        self.__url_image = news_piece['urlToImage']
 
     def author(self) -> str:
         return self.__author
