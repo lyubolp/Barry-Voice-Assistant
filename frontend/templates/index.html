@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block content %}
+    <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
     {% if user == None %}
-        <a href="login"><h1>You are not logged in. Please click here to login</h1></a>
+        <a href="login">
+            <div class="main-btn w3-button barry-bg-color white-color w3-ripple w3-round-xxlarge">
+                You are not logged in. Please click here to login.
+            </div>
+        </a>
+        <a href="register">
+            <div class="main-btn w3-button barry-bg-color white-color w3-ripple w3-round-xxlarge">
+                You are not logged in. Please click here to register.
+            </div>
+        </a>
     {% else %}
-        <img id="logo" src="{{ url_for('static', filename='img/logo.png') }}"/>
         <h1>Hello, {{ user.username }}</h1>
         <div id="send-button" class="main-button w3-circle barry-bg-color white-color w3-ripple">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="50%" height="50%">
@@ -18,7 +27,7 @@
             </svg>
         </div>
         <a href="logout">
-            <div id="logout-button" class="main-btn w3-button barry-bg-color white-color w3-ripple">
+            <div id="logout-button" class="main-btn w3-button barry-bg-color white-color w3-ripple w3-round-xxlarge">
                 Logout
             </div>
         </a>
