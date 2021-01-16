@@ -1,0 +1,30 @@
+@import 'main.scss';
+
+body{
+  background-color: $black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#register-panel {
+  width: 100%;
+  margin: 0px;
+  form {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+  }
+  p {
+    width: 80%;
+  }
+  button {
+    width: 80%;
+  }
+}
