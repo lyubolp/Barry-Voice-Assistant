@@ -63,7 +63,7 @@ def speech_to_text():
             audio = speech.RecognitionAudio(content = content)
             config = speech.RecognitionConfig(
                 encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-                sample_rate_hertz=48000,
+                sample_rate_hertz=44100,
                 language_code="en-US",
             )
 
@@ -231,7 +231,9 @@ def handle_register():
 def weather():
     response = request.json['details']
     weather = Weather(response)
-    return render_template("weather.html", weather=weather)
+    print(request.json)
+    audio_file = text_to_speech(request.json['message'])
+    return render_template("weather.html", weather=weather, audio_file=audio_file)
 
 
 if __name__ == '__main__':
