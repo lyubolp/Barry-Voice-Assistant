@@ -44,7 +44,7 @@ def news():
     return render_template('news.html', title='News', news=news_objects)
 
 
-@app.route('/what-is')
+@app.route('/what-is', methods=['POST'])
 def what_is():
     response = request.form['command-response']
     article = WhatIs(response)
