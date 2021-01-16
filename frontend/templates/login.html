@@ -6,6 +6,11 @@
 
 {% block content %}
     <div class="w3-container w3-half w3-margin-top" id="login-panel">
+        {% if errors != None %}
+            {% for error in errors %}
+                <p> {{ error }}</p>
+            {% endfor %}
+        {% endif %}
         <form class="w3-container w3-card-4" method="post" action="/handle-login" enctype="multipart/form-data">
             <p>
                 <input name="username" class="w3-input" type="text" required>
@@ -15,11 +20,6 @@
             <p>
                 <input name="password" class="w3-input" type="password" required>
                 <label>Password</label>
-            </p>
-
-            <p>
-                <input class="w3-check" type="checkbox" checked="checked">
-                <label>Stay logged in</label>
             </p>
 
             <button class="w3-button w3-section w3-teal w3-ripple"> Log in</button>
