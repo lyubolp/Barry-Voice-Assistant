@@ -11,6 +11,14 @@ from news import News
 from user import User
 from whatIs import WhatIs
 
+import os
+import random
+import string
+from google.cloud import speech
+from google.cloud import texttospeech
+import requests
+import json
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -32,6 +40,103 @@ def index():
 
     return render_template('index.html', title='Home', user=user)
 
+@app.route('/speech_to_text/', methods=['POST'])
+def speech_to_text():
+    try:
+        # move to config file?
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = app.config['GOOGLE_KEY']
+
+        try:
+            file = request.files['audio_data']
+            content = file.read()
+
+            client = speech.SpeechClient()
+
+            audio = speech.RecognitionAudio(content = content)
+            config = speech.RecognitionConfig(
+                encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+                sample_rate_hertz=48000,
+                language_code="en-US",
+            )
+
+            response = client.recognize(config = config, audio = audio)
+
+            for result in response.results:
+                result = result.alternatives[0].transcript
+                print("Transcript: {}".format(result))
+                return result
+
+        except Exception as err:
+            print("Failed to transcribe audio:")
+            print(err)
+
+    except Exception as err:
+        print("Failed to get google api credentials:")
+        print(err)
+
+def text_to_speech(text: str) -> str:
+    try:
+        # move to config file?
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = app.config['GOOGLE_KEY']
+
+        client = texttospeech.TextToSpeechClient()
+
+        synthesis_input = texttospeech.SynthesisInput(text = text)
+
+        voice = texttospeech.VoiceSelectionParams(
+            language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+        )
+
+        audio_config = texttospeech.AudioConfig(
+            audio_encoding=texttospeech.AudioEncoding.MP3
+        )
+
+        response = client.synthesize_speech(
+            input=synthesis_input, voice=voice, audio_config=audio_config
+        )
+
+        rand = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
+        filename = "audio/output" + rand + ".mp3"
+
+        with open("static/" + filename, "wb") as out:
+            out.write(response.audio_content)
+            print('Audio content written to file: ' + filename)
+
+    except Exception as err:
+        print("Failed to get google api credentials:")
+        print(err)
+        
+    return filename
+
+@app.route('/action_handler', methods=["POST"])
+def action_handler():
+    try:
+        recognized_string = request.form["recognized_string"]
+        # print("recognized_string = ", recognized_string)
+        # response = client.execute_command(token, transcribed_text)
+        response = {"action": "test", "text": recognized_string, "path": "test"}
+        if response["action"] == "test":
+            print("json:", json.dumps(response))
+            return redirect(url_for('test_func', commandResponse = json.dumps(response)))
+        # elif for other actions
+
+    except Exception as err:
+        print(err)
+
+@app.route('/test')
+def test_func():
+    response = request.args["commandResponse"]
+    response = json.loads(response)
+    text = response['text']
+
+    audio_file = text_to_speech(text)
+
+    # should take user info from cookie, but just for the test:
+    user = {
+        'username': 'lyubolp',
+        'name': 'Lyubo' }
+
+    return render_template('index.html', title="Test", user = user, audio_file = audio_file)
 
 @app.route('/news', methods=['POST'])
 def news():
