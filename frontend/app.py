@@ -129,40 +129,18 @@ def action_handler():
         transcribed_text = request.form["recognized_string"]
 
         if transcribed_text == "ERROR: Google failed to transcribe!":
-            return redirect(url_for('index'))
+            return redirect('/')
 
         # transcribed_text = "news about sports"
 
         response = client.execute_command(token, transcribed_text)
-        print(type(response))
-        print(response)
-        if response == 'Could not recognize command':
-            return redirect(url_for('index'))
-            
-        response = {'action': 'test', 'text': 'This is a test string'}
+        
         target_url = response['action']
-        print(target_url)
 
         return requests.post('http://127.0.0.1:5000/' + target_url, json = response).text
 
     except Exception as err:
-        print(err)
-
-
-@app.route('/test', methods=['POST'])
-def test_func():
-    response = request.json
-    text = response['text']
-
-    audio_file = text_to_speech(text)
-
-    # should take user info from cookie, but just for the test:
-    user = {
-        'username': 'lyubolp',
-        'name': 'Lyubo' 
-        }
-
-    return render_template('index.html', title="Test", user = user, audio_file = audio_file)
+        return redirect('/')
 
 
 @app.route('/news', methods=['POST'])
