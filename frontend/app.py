@@ -142,8 +142,8 @@ def action_handler():
         return requests.post('https://0.0.0.0:80/' + target_url, json = response).text
 
     except Exception as err:
-        print(err)
-        return redirect('/')
+        return err
+        # return redirect('/')
 
 
 @app.route('/news', methods=['POST'])
