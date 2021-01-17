@@ -236,6 +236,12 @@ def weather():
     return render_template("weather.html", weather=weather, audio_file=audio_file)
 
 
+@app.route('/joke', methods=['POST'])
+def joke():
+    response = request.json['message']
+    audio_file = text_to_speech(response)
+    return render_template("joke.html", joke=response, audio_file=audio_file)
+
 if __name__ == '__main__':
     app.run()
     # Uncomment this to run at port 80, and comment the line above
