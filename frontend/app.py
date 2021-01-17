@@ -245,8 +245,9 @@ def joke():
 
 @app.route('/time', methods=['POST'])
 def time():
-    response = request.json['message']
-    audio_file = text_to_speech(response)
+    response = request.json['details']['time_numeric']
+    # response = '12:33'
+    audio_file = text_to_speech(request.json['message'])
     print(request.json)
     return render_template("time.html", time=response, audio_file=audio_file)
 

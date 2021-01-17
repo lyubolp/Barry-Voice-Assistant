@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/clock.js') }}"></script>
+{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/time.css') }}">
 {% endblock %}
@@ -10,7 +13,7 @@
                 <p> Current time </p>
             </div>
             <div>
-                <p id="time"> {{ time }}</p>
+                <p id="time"> The time is {{ time }}</p>
             </div>
         </div>
 {% endblock %}
