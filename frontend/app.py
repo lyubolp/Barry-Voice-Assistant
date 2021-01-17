@@ -255,4 +255,4 @@ def time():
 if __name__ == '__main__':
     # app.run()
     # Uncomment this to run at port 80, and comment the line above
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, ssl_context='adhoc')
