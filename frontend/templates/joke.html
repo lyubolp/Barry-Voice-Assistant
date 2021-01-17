@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/joke.css') }}">
+{% endblock %}
+
+{% block content %}
+        <div class="w3-card-4 joke-card">
+            <div class="title-header">
+                <p> I'm going to tell you a joke </p>
+            </div>
+            <div>
+                <p> {{ joke }}</p>
+            </div>
+        </div>
+{% endblock %}
