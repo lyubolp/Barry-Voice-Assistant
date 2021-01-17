@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/weather.css') }}">
+{% endblock %}
+
+{% block content %}
+        <div class="w3-card-4 weather-card">
+            <div class="title-header">
+                <p> Weather in {{ weather.getLocationName() }} </p>
+            </div>
+            <div class="image-content">
+                <img src="{{ weather.getIconPath() }}"/>
+                <div>
+                    <p id="temp"> {{ weather.getTemp() }}  &#8451;</p> <br/>
+                    <p id="feels-like"> Feels like: {{ weather.getFeelsLike() }} &#8451;</p>
+                    <p id="description"> Weather condition: {{ weather.getDescription() }} </p>
+                </div>
+            </div>
+        </div>
+{% endblock %}

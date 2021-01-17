@@ -1,0 +1,34 @@
+$barry-color: #2ca089;
+$black: #383d3b;
+$white: #eee5e9;
+$red: #982649;
+$yellow: #fde74c;
+$card-color: #eae7d6;
+
+body{
+  font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+.barry-bg-color{
+  background-color: $barry-color;
+}
+
+.white-color{
+  color: $white;
+}
+
+.center-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#main-content {
+  width: 90vw;
+  height: 80vh;
+  padding: 1vw;
+  margin: 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,29 @@
+@import 'main.scss';
+
+body{
+  background-color: $black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: $white;
+}
+
+img{
+    height: 30%;
+}
+
+h1{
+  font-size: 2.3em;
+  text-align: center;
+}
+
+#send-button{
+  @extend .center-item;
+  width: 15vh;
+  height: 15vh;
+  span{
+    font-size: 150%;
+  }
+}

@@ -9,3 +9,11 @@ env/
 mouseClickHandler.bin
 venv/
 server.conf
+*/.idea
+frontend/venv/*
+frontend/__init__.py
+*.conf
+config.py
+*.mp3
+whatIs-New
+frontend/keys

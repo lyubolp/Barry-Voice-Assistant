@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/news.css') }}">
+{% endblock %}
+
+{% block content %}
+    {% for newsPiece in news %}
+        <a href="{{ newsPiece.url() }}" target="_blank" >
+            <div class="w3-card-4 news-card">
+                <div class="title-header">
+                    <p> {{ newsPiece.title() }} </p>
+                </div>
+                <div class="image-content">
+                    <img src="{{ newsPiece.image() }}" alt="{{ newsPiece.title() }}" style="flex-grow: 2; height:100%"/>
+
+                    <div style="flex-grow: 3">
+                        <p style="flex-grow: 3"> {{ newsPiece.description() }}</p>
+                        <p>by: {{ newsPiece.author() }} / source: {{ newsPiece.source() }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+    {% endfor %}
+
+{% endblock %}
