@@ -138,7 +138,8 @@ def action_handler():
         
         target_url = response['action']
 
-        return requests.post('http://127.0.0.1:5000/' + target_url, json = response).text
+        # For local testing, 127.0.0.1:5000
+        return requests.post('https://0.0.0.0:80/' + target_url, json = response).text
 
     except Exception as err:
         print(err)
