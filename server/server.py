@@ -205,7 +205,7 @@ def get_config():
 
 
 def main():
-    app.run(host='0.0.0.0', debug=True, port=80)
+    app.run(host='0.0.0.0', port=80)
 
 
 if __name__ == '__main__':
