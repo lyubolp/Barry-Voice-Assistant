@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/time.css') }}">
+{% endblock %}
+
+{% block content %}
+        <div class="w3-card-4 time-card">
+            <div class="title-header">
+                <p> Current time </p>
+            </div>
+            <div>
+                <p id="time"> {{ time }}</p>
+            </div>
+        </div>
+{% endblock %}

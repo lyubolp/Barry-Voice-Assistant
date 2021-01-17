@@ -242,6 +242,15 @@ def joke():
     audio_file = text_to_speech(response)
     return render_template("joke.html", joke=response, audio_file=audio_file)
 
+
+@app.route('/time', methods=['POST'])
+def time():
+    response = request.json['message']
+    audio_file = text_to_speech(response)
+    print(request.json)
+    return render_template("time.html", time=response, audio_file=audio_file)
+
+
 if __name__ == '__main__':
     app.run()
     # Uncomment this to run at port 80, and comment the line above
