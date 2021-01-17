@@ -141,6 +141,7 @@ def action_handler():
         return requests.post('http://127.0.0.1:5000/' + target_url, json = response).text
 
     except Exception as err:
+        print(err)
         return redirect('/')
 
 
