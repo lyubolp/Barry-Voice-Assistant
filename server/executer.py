@@ -23,7 +23,7 @@ def execute_command(text: str, args: Dict[str, str]):
     elif intent_type == 'WhatIsIntent':
         return execute_what_is_action(intent)
     elif intent_type == 'TimeIntent':
-        return execute_time_action()
+        return execute_time_action(args)
     elif intent_type == 'NewsIntent':
         return execute_news_action(intent, args)
     elif intent_type == 'TodoIntent':
@@ -98,8 +98,8 @@ def execute_what_is_action(what_is_intent):
     return _execute('what_is', [subject])
 
 
-def execute_time_action():
-    return _execute('time')
+def execute_time_action(args):
+    return _execute('time', [args['timezone']])
 
 
 def execute_news_action(news_intent, args):
