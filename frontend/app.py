@@ -63,7 +63,6 @@ def speech_to_text():
             audio = speech.RecognitionAudio(content = content)
             config = speech.RecognitionConfig(
                 encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-                sample_rate_hertz=44100,
                 language_code="en-US",
             )
 
@@ -139,7 +138,7 @@ def action_handler():
         target_url = response['action']
 
         # For local testing, 127.0.0.1:5000
-        return requests.post('https://0.0.0.0:80/' + target_url, json = response, verify=False).text
+        return requests.post('https://0.0.0.0:443/' + target_url, json = response, verify=False).text
 
     except Exception as err:
         # return str(err)
@@ -257,4 +256,4 @@ def time():
 if __name__ == '__main__':
     # app.run()
     # Uncomment this to run at port 80, and comment the line above
-    app.run(host='0.0.0.0', port=80, ssl_context='adhoc')
+    app.run(host='0.0.0.0', port=443, ssl_context='adhoc')
