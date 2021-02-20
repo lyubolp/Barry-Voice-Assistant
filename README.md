@@ -30,14 +30,20 @@
 
 
 ## How to setup:
-- Clone this repository - `git clone https://github.com/lyubolp/Barry-Voice-Assistant.git`
-- Go into the Barry-Voice-Assistant directory
-- Run `requirements.sh` with root privileges 
-- Create a virtual environment: `virtualenv -p python3 .env `
-- Activate the virtual environment: `source .env/bin/activate `
-- Install python dependencies: `pip install -r requirements.txt `
-- Install `systemd` as global python dependency `sudo pip3 install systemd`
-- Run `install.sh` with root privileges
+
+1. Set up a (MongoDB)[https://www.mongodb.com/] cluster. You will need the credentials to access this server, which we'll call `MONGODB_URI`. Create a database `barry` and inside create a `users` collection(table). The `users` collection needs to have 3 fields:
+    - email (create an index on this field)
+    - password
+    - config
+2. Check the credentials section below to acquire the necessary keys. The keys you will need are:
+    - `GOOGLE_KEY` from (Google)[https://console.cloud.google.com/apis/library/speech.googleapis.com] cloud for text-to-speech and speech-to-text
+    - `WEATHER_API_KEY` from (Openweather)[https://openweathermap.org/]
+    - `NEWS_API_KEY` from (NewsAPI)[https://newsapi.org/]
+3. Clone this repository - `git clone https://github.com/lyubolp/Barry-Voice-Assistant.git`
+4. Replace the placeholders for `<--MONGODB_URI-->`, `<--WEATHER_API_KEY-->`, `<--NEWS_API_KEY-->` inside server/Dockerfile with the keys you acquired in step 2.
+5. Run the server docker container and get its IP, which we'll call `SERVER_URL`.
+6. Replace the placeholders for `<--SERVER_URL-->`, `<--GOOGLE_KEY-->` inside frontend/Dockerfile with the keys you acquired in step 2 and the IP address you acquired from step 5.
+7. Run the frontend docker container and you should be able to access the Barry website with the container's IP.
 
 ## Credentials:
 
