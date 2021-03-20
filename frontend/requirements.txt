@@ -16,7 +16,7 @@ googleapis-common-protos==1.52.0
 grpcio==1.34.1
 idna==2.10
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 libcst==0.3.16
 MarkupSafe==1.1.1
 mypy-extensions==0.4.3
