@@ -2,6 +2,7 @@ from hashlib import sha256
 
 from flask import Flask, render_template, flash, redirect, request, url_for, make_response, send_file
 from flask_login import LoginManager, current_user, login_user
+from werkzeug.utils import safe_join
 
 from client.client import register, login, execute_command
 from config import Config
@@ -45,7 +46,7 @@ def index():
 
 @app.route('/audio/<path:filename>', methods=['GET'])
 def download_file(filename):
-    return send_file('static/audio/' + filename)
+    return send_file(safe_join('static/audio/', filename))
 
 
 @app.route('/speech_to_text/', methods=['POST'])
